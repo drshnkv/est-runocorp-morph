@@ -1,10 +1,16 @@
 # Estonian Runosong Morphological Corpus
 
-A comprehensive morphologically annotated corpus of 108,969 Estonian runosongs (traditional folk poetry), containing 7.3 million word instances with detailed linguistic annotation.
+> **⚠️ Experimental Non-LLM Baseline Corpus – Version 1**
+>
+> This corpus represents automated morphological annotation using **EstNLTK + dictionary methods** for archaic dialectal Estonian texts where no gold standard exists.
+>
+> **Estimated accuracy: 60-70%** based on previous evaluation experiments. The confidence scores (average 0.92) reflect method reliability estimates, not actual annotation accuracy. This corpus serves as a methodological baseline for comparing with LLM-based approaches, which show better results but are still work in progress.
+
+A morphologically annotated corpus of 108,969 Estonian runosongs (traditional folk poetry), containing 7.3 million word instances processed with non-LLM methods.
 
 ## Overview
 
-This corpus provides complete morphological analysis of Estonian dialectal runosong texts, combining EstNLTK 1.7.4 morphological processing with extensive dictionary resources (175,493 unique word forms). The annotation includes part-of-speech tags, morphological forms, lemmatization, and confidence scoring across multiple processing methods.
+This corpus provides automated morphological annotation of Estonian dialectal runosong texts, combining EstNLTK 1.7.4 morphological processing with extensive dictionary resources (175,493 unique word forms). The annotation includes part-of-speech tags, morphological forms, lemmatization, and confidence scoring across multiple processing methods.
 
 **Part of**: EKKD Project 2025-2027 (Estonian Cultural Endowment)
 **Version**: v3 (2025)
@@ -12,12 +18,13 @@ This corpus provides complete morphological analysis of Estonian dialectal runos
 
 ## Corpus Statistics
 
-- **Total word instances**: 7,302,185
+- **Total word instances processed**: 7,302,185
 - **Unique word forms**: 427,472
-- **Unique lemmas**: 167,994
+- **Unique lemmas generated**: 167,994
 - **Average occurrences per word**: 17.1
 - **Texts processed**: 108,969 runosong poems
 - **Unknown words**: 42,389 (0.58%)
+- **Average confidence score**: 0.92 (method reliability, not accuracy)
 
 ### Method Distribution
 
@@ -185,11 +192,11 @@ Total: 629,187 automated corrections
 
 ### Hybrid Ranking System
 
-For alternative lemma selection:
-- **60%** edit distance accuracy (Levenshtein distance from original form)
+For selecting among multiple lemma candidates:
+- **60%** edit distance (Levenshtein distance from original form)
 - **40%** frequency score (based on University of Tartu literary corpus)
 
-Tested on 448,217 low-confidence words, resulting in 119,184 (26.6%) improved lemmas.
+The frequency component helps select more likely correct lemmas, as words appearing more frequently in literary texts are generally more common in runosongs as well. Tested on 448,217 low-confidence words, resulting in 119,184 (26.6%) alternative lemmas selected.
 
 ### Processing Pipeline
 
@@ -202,20 +209,22 @@ Tested on 448,217 low-confidence words, resulting in 119,184 (26.6%) improved le
 
 ## Key Features
 
-- **Complete POS tagging**: Every word has morphological classification
+- **POS tagging**: Morphological classification for processed words
 - **Morphological forms**: Case/number/tense markers (sg_g, pl_p, etc.)
-- **Quality categorization**: Four-tier scholarly quality assessment
-- **Method tracking**: Transparent annotation provenance
+- **Quality categorization**: Four-tier assessment based on method and validation
+- **Method tracking**: Transparent annotation provenance for each word
 - **Source traceability**: Links to original poem identifiers
-- **Confidence scoring**: 0-1 scale for each annotation decision
-- **Ambiguity marking**: 106,821 words flagged for expert review
+- **Confidence scoring**: 0-1 scale reflecting method reliability (not accuracy)
+- **Ambiguity marking**: 106,821 words flagged as potentially ambiguous
 - **Frequency data**: Corpus-based frequency information
 
-## Validated Lemmas
+## Lemma Validation Status
 
-Of 192,756 unique lemmas:
-- **60,993 (31.6%)** validated with standard Estonian morphology
-- **131,763 (68.4%)** archaic or dialectal forms
+Of 192,756 unique lemmas generated:
+- **60,993 (31.6%)** can be validated with standard Estonian morphology (using EstNLTK/Vabamorf)
+- **131,763 (68.4%)** are archaic/dialectal forms or unvalidated word forms
+
+Note: Validation here means the lemma is recognized by standard Estonian morphological tools, not that the lemmatization is necessarily correct for the specific context.
 
 ## Citation
 

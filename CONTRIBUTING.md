@@ -1,116 +1,163 @@
 # Contributing to Estonian Runosong Morphological Corpus
 
-Thank you for your interest in improving the Estonian Runosong Morphological Corpus!
+Thank you for your interest in this experimental corpus project!
+
+## About This Corpus
+
+This is an **experimental baseline corpus** using non-LLM methods (EstNLTK + dictionaries + rule-based corrections) for morphological annotation of archaic dialectal Estonian texts.
+
+**Estimated accuracy: 60-70%**
+
+This corpus is not presented as a gold standard. Rather, it serves as:
+- A methodological baseline for comparing with other approaches
+- A foundation for developing better annotation methods
+- A transparent example of non-LLM annotation challenges
+- A resource for understanding archaic Estonian dialectal variation
 
 ## How to Contribute
 
-### Reporting Issues
+### 1. Methodology Improvements
 
-If you find errors or inconsistencies in the corpus annotation:
+We welcome contributions that improve the annotation methodology:
 
-1. **Check existing issues** - Someone may have already reported it
-2. **Create a new issue** with:
-   - Word form and lemma in question
-   - Expected annotation vs actual annotation
-   - Context (poem ID if available)
-   - Linguistic justification for the correction
+**Algorithm enhancements:**
+- Better hybrid scoring approaches for lemma selection
+- Improved dialectal variant detection
+- Enhanced morphological disambiguation strategies
+- More effective dictionary lookup methods
 
-### Suggesting Improvements
+**New processing methods:**
+- Alternative approaches to suffix stripping
+- Better handling of compound words
+- Improved h-variation detection patterns
+- Context-aware lemma selection
 
-We welcome suggestions for:
+### 2. Comparative Analysis
 
-- **Annotation corrections** - Specific lemmatization errors
-- **Quality improvements** - Better confidence scoring methods
-- **Documentation enhancements** - Clearer explanations
-- **Code examples** - New usage patterns or analyses
-- **Methodological insights** - Alternative processing approaches
+Help compare different annotation approaches:
 
-### Submitting Corrections
+**LLM-based methods:**
+- Test and document LLM annotation accuracy
+- Compare LLM vs. rule-based approaches
+- Analyze where each method excels or fails
+- Propose hybrid LLM + rule-based systems
 
-For small corrections (< 10 words):
-1. Open an issue with the corrections
-2. Provide linguistic justification
+**Alternative tools:**
+- Try other morphological analyzers
+- Compare with different dictionary resources
+- Test cross-lingual approaches (using Finnish/related languages)
+- Evaluate ensemble methods
 
-For larger corrections (> 10 words):
-1. Create a CSV file with columns: `word, current_lemma, proposed_lemma, justification`
-2. Open an issue and attach the CSV
-3. Include sources (EKSS, dialect dictionaries, etc.)
+### 3. Evaluation and Analysis
 
-## Annotation Standards
+Contribute analysis of the existing corpus:
 
-All corrections should follow these principles:
+**Accuracy assessment:**
+- Evaluate annotation quality on sample sets
+- Identify systematic error patterns
+- Analyze method performance by dialect/poem type
+- Compare automated vs. manual annotation
 
-### Lemma Selection Standards
+**Linguistic insights:**
+- Document dialectal variation patterns
+- Analyze archaic morphological forms
+- Study annotation challenges in runosong texts
+- Identify ambiguous cases needing expert input
 
-1. **Declinable words**: Singular nominative (sg Nom)
-2. **Comparative forms**: Positive degree in singular nominative
-3. **Verbs**: ma-infinitive (supine) per EKSS standard
-4. **Invariable words**: Same written form
-5. **Compound words**: Complete compound in sg Nom/ma-infinitive
+### 4. Documentation Improvements
 
-### Dialectal Material Guidelines
+Help make this resource more useful:
 
-- **Diminutives**: Use -ke form (not -kene)
-- **Derivational morphology**: Keep suffixes/infixes for distinct lemmas
-- **Fallback hierarchy**: EKSS → Finnish cognate → Finnic languages → dialectal form
-- **Standard references**: Use EKSS, synaq.org, arhiiv.eki.ee/dict/vms/, arhiiv.eki.ee/dict/ems/
+**Technical documentation:**
+- Clarify processing methods
+- Document edge cases and limitations
+- Add usage examples for specific research tasks
+- Improve code comments and examples
 
-### Citation Requirements
+**Methodological documentation:**
+- Explain design decisions
+- Document known limitations
+- Add references to relevant literature
+- Describe evaluation procedures
 
-For dialectal or archaic forms:
-- Provide source (dictionary, reference grammar)
-- Explain morphological reasoning
-- Note regional variation if applicable
+## Submitting Contributions
 
-## Code Contributions
+### For Code/Methodology Changes
 
-### Example Scripts
+1. **Open an issue** describing the proposed improvement
+2. **Explain the rationale**: Why is this approach better?
+3. **Provide evidence**: Test results, accuracy improvements, etc.
+4. **Include code**: Share scripts or modifications
+5. **Document limitations**: What doesn't this approach handle well?
 
-If you create useful analysis scripts:
+### For Analysis/Evaluation
 
-1. Follow the style in `examples/` directory
-2. Include clear docstrings
-3. Add comments for non-obvious operations
-4. Test with the actual corpus files
-5. Update `examples/README.md`
+1. **Share methodology**: How did you evaluate the corpus?
+2. **Provide data**: Sample sets, test results, statistics
+3. **Compare approaches**: What alternatives did you try?
+4. **Document findings**: What patterns did you discover?
 
-### Code Style
+### For Documentation
 
-**Python:**
-- PEP 8 compliance
-- Type hints encouraged
-- Clear variable names
-- Comprehensive docstrings
+1. **Propose changes** via issues or pull requests
+2. **Maintain tone**: Transparent about limitations, not authoritative
+3. **Include examples**: Concrete illustrations help readers
+4. **Cite sources**: Reference relevant literature and resources
 
-**SQL:**
-- Clear commenting
-- Readable formatting
-- Explain complex queries
-- Test before submitting
+## Annotation Philosophy
 
-## Review Process
+This corpus follows these principles:
 
-1. **Linguistic review** - Correctness of annotation
-2. **Data integrity check** - No breaking changes
-3. **Documentation update** - Keep docs in sync
-4. **Community feedback** - Open discussion period
+### Transparency Over Perfection
 
-## Questions?
+- Openly acknowledge ~60-70% estimated accuracy
+- Document confidence scores as method reliability, not accuracy
+- Mark ambiguous cases explicitly
+- Provide method provenance for every annotation
 
-Open an issue with the "question" label. We aim to respond within 1 week.
+### Methodological Foundation
 
-## License
+- Serve as baseline for comparing better approaches
+- Enable research on annotation methodology
+- Support development of improved tools
+- Facilitate comparative analysis
 
-By contributing, you agree that your contributions will be licensed under CC BY 4.0, the same license as the corpus.
+### Community Collaboration
+
+- Welcome alternative approaches and criticism
+- Share knowledge about dialectal annotation challenges
+- Build on each other's improvements
+- Foster open discussion of limitations
+
+## What We Don't Need
+
+- **"Error corrections"** as if this were a gold standard corpus
+- **Claims of definitive correct annotations** for archaic dialectal material
+- **Additions without methodology documentation**
+- **Contributions that aren't reproducible**
+
+## Questions and Discussion
+
+Open an issue with the "question" or "discussion" label for:
+
+- Methodology questions
+- Alternative approach ideas
+- Evaluation design
+- Interpretation of results
+- Resource recommendations
 
 ## Acknowledgments
 
-All contributors will be acknowledged in future corpus versions and in the project documentation.
+Contributors will be acknowledged in:
+- Future corpus versions
+- Related publications
+- Project documentation
+- GitHub contributors list
 
 ## Contact
 
-For major contributions or collaboration inquiries, please contact the maintainers through GitHub issues.
+For major contributions or collaboration inquiries, open a GitHub issue with the "collaboration" label.
 
 ---
 
-**Note**: This is a scholarly linguistic resource. All contributions should prioritize **linguistic accuracy** and **scholarly rigor** over convenience or automation.
+**Remember**: This is experimental work on challenging archaic dialectal texts. Transparency about limitations and methodological rigor are more valuable than claims of high accuracy.
