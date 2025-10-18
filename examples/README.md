@@ -52,15 +52,34 @@ Collection of SQL queries for the SQLite database:
 8. **Export queries** - Sample datasets for research
 
 **Usage:**
+
+**Option 1: Interactive query runner (recommended):**
 ```bash
-# Interactive mode
+cd examples
+
+# List all available queries
+./run_queries.sh --list
+
+# Run specific queries by number
+./run_queries.sh 1          # Run query #1 (word forms for lemma 'piir')
+./run_queries.sh 1 5 9      # Run queries 1, 5, and 9
+
+# Run all queries interactively (pause between each)
+./run_queries.sh
+
+# Run all queries without pausing
+./run_queries.sh --all
+```
+
+**Option 2: Direct SQLite (for custom queries):**
+```bash
+# Interactive mode with formatting
 sqlite3 ../corpus_runosongs_v2_FIXED.db
+.mode column
+.headers on
 
-# Then run queries from the file
-.read query_examples.sql
-
-# Or run specific queries
-sqlite3 ../corpus_runosongs_v2_FIXED.db < query_examples.sql
+# Run custom query
+SELECT word_form, count FROM lemma_variants WHERE lemma = 'piir' LIMIT 10;
 ```
 
 ## Requirements
@@ -126,4 +145,4 @@ dict             617085      8.5         0.647
 
 - See `../README.md` for corpus overview and statistics
 - See `../DOCUMENTATION_ET.md` for Estonian-language documentation of annotation process
-- See corpus build log at `../corpus_v3_build.log` for processing details
+

@@ -30,14 +30,40 @@ def lookup_word(corpus, word):
 
     data = corpus['words'][word]
     print(f"\n📝 Word: {word}")
-    print(f"  Lemmas: {data['lemmas']}")
-    print(f"  POS tags: {data['pos_tags']}")
-    print(f"  Morphological forms: {data['forms']}")
-    print(f"  Processing methods: {data['methods']}")
     print(f"  Total occurrences: {data['total_count']}")
-    print(f"  Average confidence: {data['avg_confidence']:.3f}")
-    print(f"  Quality tier: {data['quality']}")
+    print(f"  Lemmas: {data['lemmas']}")
+
+    # Show details for each lemma
+    for lemma in data['lemmas']:
+        print(f"\n  Lemma '{lemma}':")
+        print(f"    Count: {data['lemma_counts'].get(lemma, 0)}")
+
+        # Confidence stats
+        conf_stats = data['confidences'].get(lemma, {})
+        if conf_stats:
+            print(f"    Confidence: avg={conf_stats.get('avg', 0):.3f}, "
+                  f"min={conf_stats.get('min', 0):.3f}, "
+                  f"max={conf_stats.get('max', 0):.3f}")
+
+        # POS tags
+        pos_tags = data['pos_tags'].get(lemma, {})
+        if pos_tags:
+            print(f"    POS tags: {pos_tags}")
+
+        # Morphological forms
+        forms = data['forms'].get(lemma, {})
+        if forms:
+            print(f"    Forms: {forms}")
+
+        # Methods
+        methods = data['methods'].get(lemma, {})
+        if methods:
+            print(f"    Methods: {methods}")
+
+    print(f"\n  First seen: {data.get('first_seen', 'N/A')}")
+    print(f"  Last seen: {data.get('last_seen', 'N/A')}")
     print(f"  Source poems: {len(data.get('source_poems', []))} poems")
+
     return data
 
 def find_lemma_variants(corpus, lemma):
@@ -46,13 +72,20 @@ def find_lemma_variants(corpus, lemma):
         print(f"❌ Lemma '{lemma}' not found in corpus")
         return []
 
-    variants = corpus['lemma_index'][lemma]
+    lemma_data = corpus['lemma_index'][lemma]
     print(f"\n🔍 Variants of lemma '{lemma}':")
-    for variant in variants:
-        if variant in corpus['words']:
-            count = corpus['words'][variant]['total_count']
-            print(f"  {variant}: {count} occurrences")
-    return variants
+    print(f"  Total occurrences: {lemma_data['total_occurrences']:,}")
+    print(f"  Word forms: {len(lemma_data['word_forms'])}")
+
+    # Show form distribution
+    print(f"\n  Form distribution:")
+    form_dist = lemma_data.get('form_distribution', {})
+    for word_form, stats in sorted(form_dist.items(), key=lambda x: -x[1]['count'])[:10]:
+        print(f"    {word_form}: {stats['count']} occurrences, "
+              f"avg_conf={stats['confidence_avg']:.3f}, "
+              f"forms={stats['forms']}")
+
+    return lemma_data['word_forms']
 
 def analyze_ambiguous(corpus, word):
     """Check if a word has ambiguous lemmatization"""
@@ -63,40 +96,45 @@ def analyze_ambiguous(corpus, word):
 
     data = ambiguous[word]
     print(f"\n⚠️  Word '{word}' is ambiguous:")
-    print(f"  Competing lemmas: {data['competing_lemmas']}")
+    print(f"  Total occurrences: {data['total_occurrences']}")
     print(f"  Needs review: {data['needs_review']}")
+
+    print(f"\n  Lemma competition:")
+    for lemma, stats in sorted(data['lemma_competition'].items(),
+                               key=lambda x: -x[1]['chosen']):
+        print(f"    {lemma}: chosen {stats['chosen']}x, "
+              f"rejected {stats['rejected']}x, "
+              f"avg_conf={stats['confidence_avg']:.3f}")
+
+    if data.get('alternatives_seen'):
+        print(f"\n  Alternative lemmas seen: {data['alternatives_seen']}")
+
     return data
 
 def get_corpus_statistics(corpus):
     """Extract overall corpus statistics"""
+    metadata = corpus.get('metadata', {})
     words = corpus['words']
 
-    # Count total word instances
-    total_instances = sum(w['total_count'] for w in words.values())
-
-    # Count POS tags
-    all_pos = Counter()
-    for word_data in words.values():
-        for pos, count in word_data['pos_tags'].items():
-            all_pos[pos] += count
-
-    # Count quality tiers
-    quality_dist = Counter(w['quality'] for w in words.values())
-
     print("\n📊 Corpus Statistics:")
-    print(f"  Total word instances: {total_instances:,}")
+    print(f"  Total word instances: {metadata.get('total_words', 0):,}")
     print(f"  Unique word forms: {len(words):,}")
     print(f"  Unique lemmas: {len(corpus['lemma_index']):,}")
 
-    print("\n  POS distribution:")
-    for pos, count in all_pos.most_common(10):
-        percentage = (count / total_instances) * 100
-        print(f"    {pos}: {count:,} ({percentage:.1f}%)")
+    # Method analytics
+    if 'method_analytics' in corpus:
+        print("\n  Method distribution:")
+        for method, data in sorted(corpus['method_analytics'].items(),
+                                  key=lambda x: -x[1]['total_uses'])[:10]:
+            pct = 100 * data['total_uses'] / metadata.get('total_words', 1)
+            print(f"    {method:20s}: {data['total_uses']:>8,} ({pct:>5.1f}%) "
+                  f"[conf: {data['avg_confidence']:.3f}]")
 
-    print("\n  Quality distribution:")
-    for quality, count in quality_dist.most_common():
-        percentage = (count / len(words)) * 100
-        print(f"    {quality}: {count:,} ({percentage:.1f}%)")
+    # Quality tiers
+    if 'quality_tiers' in corpus:
+        print("\n  Quality distribution:")
+        for tier, data in corpus['quality_tiers'].items():
+            print(f"    {tier:20s}: {data['count']:>8,} ({data['percentage']:>5.1f}%)")
 
 def main():
     """Run example analyses"""
@@ -116,11 +154,29 @@ def main():
     get_corpus_statistics(corpus)
 
     # Example 5: Find high-confidence words with specific POS
-    print("\n🔎 Sample nouns with high confidence:")
+    print("\n🔎 Sample nouns (POS=S) with high avg confidence:")
     count = 0
     for word, data in corpus['words'].items():
-        if data['quality'] == 'high_confidence' and 'S' in data['pos_tags']:
-            print(f"  {word} → {list(data['lemmas'].keys())[0]}")
+        # Calculate average confidence
+        total_conf = 0
+        total_count = 0
+        has_noun = False
+
+        for lemma in data['lemmas']:
+            conf_stats = data['confidences'].get(lemma, {})
+            if 'avg' in conf_stats and 'count' in conf_stats:
+                total_conf += conf_stats['avg'] * conf_stats['count']
+                total_count += conf_stats['count']
+
+            # Check if any lemma has POS=S
+            pos_tags = data['pos_tags'].get(lemma, {})
+            if 'S' in pos_tags:
+                has_noun = True
+
+        avg_conf = total_conf / total_count if total_count > 0 else 0.0
+
+        if has_noun and avg_conf >= 0.9:
+            print(f"  {word} → {data['lemmas'][0]} (conf: {avg_conf:.3f})")
             count += 1
             if count >= 10:
                 break

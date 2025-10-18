@@ -12,8 +12,7 @@ A morphologically annotated corpus of 108,969 Estonian runosongs (traditional fo
 
 This corpus provides automated morphological annotation of Estonian dialectal runosong texts, combining EstNLTK 1.7.4 morphological processing with extensive dictionary resources (175,493 unique word forms). The annotation includes part-of-speech tags, morphological forms, lemmatization, and confidence scoring across multiple processing methods.
 
-**Part of**: EKKD Project 2025-2027 (Estonian Cultural Endowment)
-**Version**: v3 (2025)
+
 **License**: CC BY 4.0
 
 ## Corpus Statistics
@@ -66,22 +65,34 @@ The JSON corpus contains complete morphological annotation with the following st
 {
   "words": {
     "piiri": {
-      "lemmas": {"piir": 42},
-      "pos_tags": {"S": 42},
-      "forms": {"sg_g": 37, "sg_p": 5},
-      "methods": {"estnltk+dict": 42},
-      "total_count": 42,
-      "avg_confidence": 1.0,
-      "source_poems": ["ERA.1.1.1", "..."],
-      "quality": "high_confidence"
+      "lemmas": ["piir"],
+      "lemma_counts": {"piir": 787},
+      "methods": {"piir": {"estnltk+dict": 787}},
+      "confidences": {"piir": {"avg": 1.0, "min": 1.0, "max": 1.0, "count": 787}},
+      "pos_tags": {"piir": {"S": 787}},
+      "forms": {"piir": {"sg_g": 720, "sg_p": 67}},
+      "total_count": 787,
+      "first_seen": "batch_00001",
+      "last_seen": "batch_01090",
+      "source_poems": ["ERA.1.1.1", "..."]
     }
   },
   "lemma_index": {
-    "piir": ["piir", "piiri", "piire", "piirid"]
+    "piir": {
+      "word_forms": ["piir", "piiri", "piire", "piirid"],
+      "total_occurrences": 2847,
+      "form_distribution": {
+        "piiri": {"count": 787, "forms": ["sg_g", "sg_p"], "confidence_avg": 1.0}
+      }
+    }
   },
   "ambiguous_words": {
     "kand": {
-      "competing_lemmas": {"kand": 45, "kanna": 12},
+      "total_occurrences": 57,
+      "lemma_competition": {
+        "kand": {"chosen": 45, "rejected": 0, "confidence_avg": 0.85},
+        "kanna": {"chosen": 12, "rejected": 45, "confidence_avg": 0.75}
+      },
       "needs_review": true
     }
   }
@@ -95,25 +106,28 @@ The SQLite database provides fast indexed lookups with 4 tables:
 **`words` table:**
 - `word` (TEXT PRIMARY KEY)
 - `total_count` (INTEGER)
+- `first_seen` (TEXT) - First batch where word appeared
+- `last_seen` (TEXT) - Last batch where word appeared
+- `lemmas` (TEXT) - Comma-separated list of lemmas
 - `avg_confidence` (REAL)
-- `primary_method` (TEXT)
 
 **`lemma_variants` table:**
 - `lemma` (TEXT)
 - `word_form` (TEXT)
 - `count` (INTEGER)
 - `avg_confidence` (REAL)
+- PRIMARY KEY (`lemma`, `word_form`)
 
 **`method_stats` table:**
 - `method` (TEXT PRIMARY KEY)
-- `word_count` (INTEGER)
-- `percentage` (REAL)
+- `total_uses` (INTEGER)
 - `avg_confidence` (REAL)
 
 **`ambiguous_words` table:**
 - `word` (TEXT PRIMARY KEY)
+- `total_occurrences` (INTEGER)
 - `num_competing_lemmas` (INTEGER)
-- `needs_review` (INTEGER)
+- `needs_review` (BOOLEAN)
 
 ## Usage Examples
 
@@ -171,9 +185,9 @@ ORDER BY a.num_competing_lemmas DESC, w.total_count DESC
 LIMIT 50;
 
 -- Get method performance statistics
-SELECT method, word_count, percentage, avg_confidence
+SELECT method, total_uses, avg_confidence
 FROM method_stats
-ORDER BY word_count DESC;
+ORDER BY total_uses DESC;
 ```
 
 See the `examples/` directory for more code samples.
@@ -226,15 +240,13 @@ Of 192,756 unique lemmas generated:
 
 Note: Validation here means the lemma is recognized by standard Estonian morphological tools, not that the lemmatization is necessarily correct for the specific context.
 
-## Citation
+## Citation and Licence
 
-If you use this corpus in your research, please cite:
+If you intend to use this corpus in your research, please contact first:
 
 ```
-Estonian Runosong Morphological Corpus v3 (2025)
-EKKD Project 2025-2027
+kaarel.veskis@kirmus.ee 
 https://github.com/drshnkv/est-runocorp-morph
-License: CC BY 4.0
 ```
 
 ## Technical Details
@@ -242,32 +254,7 @@ License: CC BY 4.0
 - **Processing environment**: Google Colab with parallel batch processing
 - **Batch structure**: 1090 batches (~100 poems each)
 - **Morphological analyzer**: EstNLTK 1.7.4 with Vabamorf
-- **Validation mode**: Strict (guess=False, propername=False, compound=False)
 - **Dictionary sources**: Combined index of 175,493 unique entries
-- **Processing time**: ~6 minutes for complete corpus (7.3M words)
 
-## Related Resources
 
-- [EstNLTK Documentation](https://estnltk.github.io/)
-- [Vabamorf](https://github.com/Filosoft/vabamorf)
-- [EKSS Dictionary](https://www.eki.ee/dict/ekss/)
-- [Estonian Dialectology](https://www.eki.ee/murded/)
 
-## Contact
-
-For questions or issues with this corpus, please open an issue on GitHub.
-
-## Acknowledgments
-
-This corpus was created as part of the EKKD Project 2025-2027, funded by the Estonian Cultural Endowment. Special thanks to the FILTER research group for manual annotation data.
-
-## License
-
-This corpus is released under **CC BY 4.0** (Creative Commons Attribution 4.0 International).
-
-You are free to:
-- Share — copy and redistribute the material
-- Adapt — remix, transform, and build upon the material
-
-Under the following terms:
-- **Attribution** — You must give appropriate credit and indicate if changes were made

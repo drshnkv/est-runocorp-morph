@@ -17,9 +17,9 @@ FROM words
 WHERE word = 'piiri';
 
 -- 3. List all processing methods with their performance
-SELECT method, word_count, percentage, avg_confidence
+SELECT method, total_uses, avg_confidence
 FROM method_stats
-ORDER BY word_count DESC;
+ORDER BY total_uses DESC;
 
 -- ============================================================
 -- AMBIGUOUS WORDS ANALYSIS
@@ -51,16 +51,16 @@ ORDER BY num_competing_lemmas DESC;
 -- ============================================================
 
 -- 7. Find low-confidence, high-frequency words (potential issues)
-SELECT word, total_count, avg_confidence, primary_method
+SELECT word, total_count, avg_confidence
 FROM words
 WHERE avg_confidence < 0.5 AND total_count > 50
 ORDER BY total_count DESC
 LIMIT 100;
 
--- 8. Find high-confidence words processed by specific method
+-- 8. Find high-confidence words
 SELECT word, total_count, avg_confidence
 FROM words
-WHERE primary_method = 'estnltk+dict' AND avg_confidence > 0.95
+WHERE avg_confidence > 0.95
 ORDER BY total_count DESC
 LIMIT 50;
 
@@ -98,20 +98,18 @@ LIMIT 50;
 -- METHOD COMPARISON
 -- ============================================================
 
--- 12. Compare average confidence across different processing methods
-SELECT primary_method,
-       COUNT(*) as word_count,
+-- 12. Get overall word quality statistics
+SELECT
+       COUNT(*) as total_words,
        AVG(avg_confidence) as avg_conf,
        MIN(avg_confidence) as min_conf,
        MAX(avg_confidence) as max_conf
-FROM words
-GROUP BY primary_method
-ORDER BY avg_conf DESC;
+FROM words;
 
--- 13. Find words where multiple methods might apply (for validation)
-SELECT w.word, w.total_count, w.avg_confidence, w.primary_method
+-- 13. Find low-confidence words (might need validation)
+SELECT w.word, w.total_count, w.avg_confidence
 FROM words w
-WHERE w.primary_method IN ('levenshtein', 'compound', 'suffix_strip')
+WHERE w.avg_confidence < 0.5
   AND w.total_count > 20
 ORDER BY w.total_count DESC
 LIMIT 100;
@@ -121,7 +119,7 @@ LIMIT 100;
 -- ============================================================
 
 -- 14. Find hapax legomena (words appearing only once)
-SELECT word, primary_method, avg_confidence
+SELECT word, avg_confidence
 FROM words
 WHERE total_count = 1
 ORDER BY avg_confidence DESC
@@ -143,7 +141,7 @@ GROUP BY frequency_range
 ORDER BY MIN(total_count);
 
 -- 16. Find most common words in corpus
-SELECT word, total_count, avg_confidence, primary_method
+SELECT word, total_count, avg_confidence
 FROM words
 ORDER BY total_count DESC
 LIMIT 100;
@@ -153,7 +151,7 @@ LIMIT 100;
 -- ============================================================
 
 -- 17. Find potential annotation errors (high frequency + low confidence)
-SELECT word, total_count, avg_confidence, primary_method
+SELECT word, total_count, avg_confidence
 FROM words
 WHERE total_count > 100 AND avg_confidence < 0.6
 ORDER BY total_count DESC;
@@ -181,8 +179,7 @@ SELECT
     w.word,
     w.total_count as frequency,
     w.avg_confidence as confidence,
-    a.num_competing_lemmas as alternatives,
-    w.primary_method as method
+    a.num_competing_lemmas as alternatives
 FROM words w
 JOIN ambiguous_words a ON w.word = a.word
 WHERE a.needs_review = 1
