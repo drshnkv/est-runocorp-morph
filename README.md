@@ -2,7 +2,7 @@
 
 > **⚠️ Experimental Non-LLM Baseline Corpus – Version 1**
 >
-> This corpus represents automated morphological annotation using **EstNLTK + dictionary methods** for archaic dialectal Estonian texts where no gold standard exists.
+> This corpus represents preliminary automated morphological annotation using **EstNLTK + lexical resources methods** for archaic dialectal Estonian texts.
 >
 > **Estimated accuracy: 60-70%** based on previous evaluation experiments. The confidence scores (average 0.92) reflect method reliability estimates, not actual annotation accuracy. This corpus serves as a methodological baseline for comparing with LLM-based approaches, which show better results but are still work in progress.
 
@@ -10,10 +10,8 @@ A morphologically annotated corpus of 108,969 Estonian runosongs (traditional fo
 
 ## Overview
 
-This corpus provides automated morphological annotation of Estonian dialectal runosong texts, combining EstNLTK 1.7.4 morphological processing with extensive dictionary resources (175,493 unique word forms). The annotation includes part-of-speech tags, morphological forms, lemmatization, and confidence scoring across multiple processing methods.
+This corpus provides automated morphological annotation of Estonian dialectal runosong texts, combining EstNLTK 1.7.4 morphological processing with lexical resources (175,493 unique word forms). The annotation includes part-of-speech tags, morphological forms, lemmatization, and confidence scoring across multiple processing methods.
 
-
-**License**: CC BY 4.0
 
 ## Corpus Statistics
 
