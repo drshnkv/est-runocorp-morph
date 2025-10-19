@@ -4,7 +4,7 @@
 >
 > This corpus represents preliminary automated morphological annotation using **EstNLTK + lexical resources methods** for archaic dialectal Estonian texts.
 >
-> **Estimated accuracy: 60-70%** based on previous evaluation experiments. The confidence scores (average 0.92) reflect method reliability estimates, not actual annotation accuracy. This corpus serves as a methodological baseline for comparing with LLM-based approaches, which show better results but are still work in progress.
+> **Estimated accuracy: 60-70%** based on previous evaluation experiments. Recent quality testing against high-quality LLM-annotated Järva runosongs (361 poems, 23,356 tokens) achieved **74.4% exact match accuracy**, confirming the corpus quality is at the upper end of estimates. The confidence scores (average 0.92) reflect method reliability estimates, not actual annotation accuracy. This corpus serves as a methodological baseline for comparing with LLM-based approaches, which show better results but are still work in progress.
 
 A morphologically annotated corpus of 108,969 Estonian runosongs (traditional folk poetry), containing 7.3 million word instances processed with non-LLM methods.
 
