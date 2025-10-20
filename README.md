@@ -48,24 +48,34 @@ This corpus provides automated morphological annotation of Estonian dialectal ru
 
 ## Files Included
 
-### Current Version (v3 - October 2025)
+### Current Version (v4 - October 2025) ✨ NEW
 
-- **`corpus_fixed_ambiguity_strict.json.gz`** (34 MB) - Latest corpus with Järva improvements and fixed ambiguity detection
-- **`corpus_fixed_ambiguity_strict.db`** (75 MB) - SQLite database for efficient querying
+- **`corpus_ambiguity_validated.json.gz`** (34 MB) - Corpus with EstNLTK-validated lemmas
+- **`corpus_ambiguity_validated.db`** (73 MB) - SQLite database for efficient querying
 - **`DOCUMENTATION_ET.md`** - Estonian language documentation of annotation process
 - **`examples/`** - Code examples for using the corpus
 
-### Previous Version (v2 - October 2025)
+**What's new in v4:**
+- **Ambiguity validation**: 12,835 invalid lemmas corrected (70,953 instances)
+- **EstNLTK strict validation**: All competing lemmas validated against Estonian dictionary
+- **42.5% ambiguity reduction**: From 24,777 to 14,238 truly ambiguous words
+- **Method tracking**: New `_estnltk_validated` suffix for corrected words
+- **Preservation**: True ambiguity (9,466 words) and dialectal forms (3,484 words) maintained
 
-- **`corpus_runosongs_v2_corrected_FIXED.json.gz`** (42 MB) - Corpus before ambiguity fix
-- **`corpus_runosongs_v2_FIXED.db`** (79 MB) - SQLite database
+### Previous Version (v3 - October 2025)
 
-**What's new in v3:**
+- **`corpus_fixed_ambiguity_strict.json.gz`** (34 MB) - Corpus with Järva improvements and fixed ambiguity detection
+- **`corpus_fixed_ambiguity_strict.db`** (75 MB) - SQLite database
+
+**What was new in v3:**
 - **Järva improvements**: 280,380 lemma corrections (91.20% accuracy vs gold standard)
 - **Fixed morphology**: Correct verb forms (sid, n, b, s, ma, tud instead of generic "x")
 - **Fixed ambiguity detection**: 76.8% reduction in false ambiguity (24,777 truly ambiguous vs 106,821 before)
 - **Cleaner structure**: `lemma_competition` only shows actually-chosen lemmas (not rejected-only)
-- **File size**: 19% smaller compressed JSON (34 MB vs 42 MB)
+
+### Earlier Versions
+
+- **v2**: `corpus_runosongs_v2_corrected_FIXED.json.gz` (42 MB) - Before ambiguity fixes
 
 ## Data Structure
 
@@ -241,14 +251,14 @@ The frequency component helps select more likely correct lemmas, as words appear
 - **Method tracking**: Transparent annotation provenance for each word
 - **Source traceability**: Links to original poem identifiers
 - **Confidence scoring**: 0-1 scale reflecting method reliability (not accuracy)
-- **Ambiguity marking**: 24,777 words with genuine lemma competition (v3: fixed false ambiguity, was 106,821 in v2)
+- **Ambiguity marking**: 14,238 words with genuine lemma competition (v4: EstNLTK-validated, was 24,777 in v3, 106,821 in v2)
 - **Frequency data**: Corpus-based frequency information
 
 ## Lemma Validation Status
 
-Of 192,434 unique lemmas generated:
-- **61,024 (31.7%)** can be validated with standard Estonian morphology (using EstNLTK/Vabamorf)
-- **131,410 (68.3%)** are archaic/dialectal forms or unvalidated word forms
+Of 160,024 unique lemmas generated:
+- **61,024 (38.1%)** can be validated with standard Estonian morphology (using EstNLTK/Vabamorf)
+- **99,000 (61.9%)** are archaic/dialectal forms or unvalidated word forms
 
 **Validation history:**
 - Oct 14 (pre-corrections): 23.7% valid (51,341 / 216,357 lemmas)
@@ -256,6 +266,9 @@ Of 192,434 unique lemmas generated:
 - Oct 19 (after Järva improvements): 31.7% valid (61,024 / 192,434 lemmas)
   - Järva contribution: 1,383 / 1,836 lemmas validated (75.3%)
   - Järva quality vs gold standard: 91.20% exact match accuracy
+- Oct 20 (after ambiguity validation): 38.1% valid (61,024 / 160,024 lemmas)
+  - **Removed 32,410 invalid lemmas** from ambiguous words
+  - Validation improvement: **+6.4 percentage points**
 
 Note: Validation means the lemma is recognized by standard Estonian morphological tools, not that the lemmatization is necessarily correct for the specific context. Järva improvements (280,380 corrections) were based on high-quality LLM annotations achieving 91.20% accuracy vs gold standard.
 
