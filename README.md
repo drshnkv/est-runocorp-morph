@@ -272,12 +272,34 @@ Of 160,024 unique lemmas generated:
 
 Note: Validation means the lemma is recognized by standard Estonian morphological tools, not that the lemmatization is necessarily correct for the specific context. Järva improvements (280,380 corrections) were based on high-quality LLM annotations achieving 91.20% accuracy vs gold standard.
 
+## Lexical Resources
+
+This corpus was created using a combined index of lexical resources (175,493 unique word forms). The primary sources include:
+
+**EKSS** – Explanatory Dictionary of the Estonian Language. Institute of the Estonian Language. *Eesti keele seletav sõnaraamat* (Online edition). https://www.eki.ee/dict/ekss/ (Accessed 22 July 2025).
+
+**EMS** – Estonian Dialect Dictionary. Institute of the Estonian Language. *Eesti murrete sõnaraamat* (Version 1.3). https://eki.ee/dict/ems/ (Accessed 22 July 2025).
+
+**IMS** – Eastern Estonian Dialect Dictionary. Institute of the Estonian Language. *Ida‑Eesti murdesõnastik*. https://www.eki.ee/dict/ida/ (Accessed 22 July 2025).
+
+**VMS** – Glossary of Lesser‑Known Dialect Words. Estonian Literary Museum. *Vähemtuntud murdesõnade seletusi*. https://www.folklore.ee/moistatused/?id=murdesonu (Accessed 22 July 2025).
+
+**VES** – Võro–Estonian Dictionary. Võro Institute. *Võro-eesti synaraamat* (Online edition; comp. Jüvä Sullõv; print ed. 2002, ISBN 9985-9386-0-7). https://www.folklore.ee/Synaraamat/ (Accessed 22 July 2025).
+
+**ERLA** – Glossary of Rare and Obscure Folk‑Song Words. Estonian Literary Museum. *Harva ja vähem‑kasutatavate sõnade sõnastik*, in *Regilaulud. Antoloogia* corpus. https://www.folklore.ee/laulud/erla/ (Accessed 22 July 2025).
+
+**ERAB** – Oras, Janika; Saarlo, Liina; Sarv, Mari; Labi, Kanni; Uus, Merli; Šmitaite, Reda (comps.). Eesti Regilaulude Andmebaas / Database of Estonian Runosongs. Estonian Folklore Archives, Estonian Literary Museum. 2003 – present. URL: https://www.folklore.ee/regilaul/andmebaas
+
+**EMK** – Corpus of Estonian Dialects. University of Tartu, Institute of Estonian and General Linguistics. *Eesti murrete korpus*. https://datadoi.ee/handle/33/492 (Accessed 22 July 2025).
+
+**EKI‑RC** – EKI Runosong Corpus. Institute of the Estonian Language. *EKI regilaulukorpus* (2019‑2024), derived from the 1969–1974 *Regilaulud. Antoloogia* volumes; (Internal project corpus; description in Ross 2015, *Keel ja Kirjandus*, 68 (6), 510‑539.) (Accessed 22 July 2025).
+
 ## Citation and Licence
 
 If you intend to use this corpus in your research, please contact first:
 
 ```
-kaarel.veskis@kirmus.ee 
+kaarel.veskis@kirmus.ee
 https://github.com/drshnkv/est-runocorp-morph
 ```
 
