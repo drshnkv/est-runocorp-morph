@@ -35,7 +35,7 @@ cd examples
 python advanced_analysis.py
 ```
 
-### view_poem.py ⭐ NEW
+### view_poem.py 
 
 View complete annotated Estonian runosong poems with morphological annotations preserved in order:
 - Display complete texts with annotations
@@ -60,7 +60,7 @@ python view_poem.py --random 5 --min-confidence 0.9
 python view_poem.py 89248 --export poem_89248.json
 ```
 
-### generate_poem_index.py ⭐ NEW
+### generate_poem_index.py 
 
 Generate the poem-level index from batch annotation files. This tool reconstructs the complete corpus with word order preserved.
 
