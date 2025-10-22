@@ -2,9 +2,9 @@
 
 > **⚠️ Experimental Non-LLM Baseline Corpus – Version 1**
 >
-> This corpus represents preliminary automated morphological annotation using **EstNLTK + lexical resources methods** for archaic dialectal Estonian texts.
+> This corpus represents preliminary automated morphological annotation using **EstNLTK + lexical resources** for archaic dialectal Estonian texts.
 >
-> **Estimated accuracy: 60-70%** based on previous evaluation experiments. Recent quality testing against high-quality LLM-annotated Järva runosongs (361 poems, 23,356 tokens) achieved **74.4% exact match accuracy**, confirming the corpus quality is at the upper end of estimates. The confidence scores (average 0.92) reflect method reliability estimates, not actual annotation accuracy. This corpus serves as a methodological baseline for comparing with LLM-based approaches, which show better results but are still work in progress.
+> **Estimated accuracy: ca 70%** based on preliminary non-conclusive evaluation.  The confidence scores (average 0.92) reflect method reliability estimates, not actual annotation accuracy. This corpus serves as a methodological baseline for comparing with LLM-based approaches, which show better results but are still work in progress.
 
 A morphologically annotated corpus of 108,969 Estonian runosongs (traditional folk poetry), containing 7.3 million word instances processed with non-LLM methods.
 
@@ -216,24 +216,6 @@ See the `examples/` directory for more code samples.
 
 ## Annotation Methodology
 
-### Three-Tier Correction System
-
-The corpus underwent automated correction using a hybrid scoring system:
-
-- **Tier 1** (high confidence): 588,046 corrections validated by Vabamorf morphological analyzer
-- **Tier 2** (medium confidence): 2,608 corrections from dictionary without Vabamorf validation
-- **Tier 3** (low confidence): 38,533 corrections from low-similarity matches
-
-Total: 629,187 automated corrections
-
-### Hybrid Ranking System
-
-For selecting among multiple lemma candidates:
-- **60%** edit distance (Levenshtein distance from original form)
-- **40%** frequency score (based on University of Tartu literary corpus)
-
-The frequency component helps select more likely correct lemmas, as words appearing more frequently in literary texts are generally more common in runosongs as well. Tested on 448,217 low-confidence words, resulting in 119,184 (26.6%) alternative lemmas selected.
-
 ### Processing Pipeline
 
 1. **EstNLTK+dict** (33%): Morphological analysis confirmed by dictionary entries
@@ -242,6 +224,18 @@ The frequency component helps select more likely correct lemmas, as words appear
 4. **Dict** (8%): Direct dictionary match without morphological confirmation
 5. **Levenshtein** (4%): Fuzzy matching for dialectal variants
 6. **Other methods** (4%): Suffix stripping, h-variation, compound analysis, etc.
+
+
+###  Automated follow-up correction cycles based on the ranking system and other filtration criteria
+
+Ranking system:
+
+For selecting among multiple lemma candidates:
+- **60%** edit distance (Levenshtein distance from original form)
+- **40%** frequency score (based on University of Tartu literary corpus)
+
+The frequency component helps select more likely correct lemmas, as words appearing more frequently in literary texts are generally more common in runosongs as well. Tested on 448,217 low-confidence words, resulting in 119,184 (26.6%) alternative lemmas selected.
+
 
 ## Key Features
 
@@ -263,9 +257,7 @@ Of 160,024 unique lemmas generated:
 **Validation history:**
 - Oct 14 (pre-corrections): 23.7% valid (51,341 / 216,357 lemmas)
 - Oct 16 (after Tier 1+2+3): 31.6% valid (60,993 / 192,756 lemmas)
-- Oct 19 (after Järva improvements): 31.7% valid (61,024 / 192,434 lemmas)
-  - Järva contribution: 1,383 / 1,836 lemmas validated (75.3%)
-  - Järva quality vs gold standard: 91.20% exact match accuracy
+- Oct 19 (after improvements based on 361 Järvamaa runosongs annotated with Claude Sonnet 3.5): 31.7% valid (61,024 / 192,434 lemmas)
 - Oct 20 (after ambiguity validation): 38.1% valid (61,024 / 160,024 lemmas)
   - **Removed 32,410 invalid lemmas** from ambiguous words
   - Validation improvement: **+6.4 percentage points**
@@ -275,6 +267,10 @@ Note: Validation means the lemma is recognized by standard Estonian morphologica
 ## Lexical Resources
 
 This corpus was created using a combined index of lexical resources (175,493 unique word forms). The primary sources include:
+
+**EMK** – Corpus of Estonian Dialects. University of Tartu, Institute of Estonian and General Linguistics. *Eesti murrete korpus*. https://datadoi.ee/handle/33/492 (Accessed 22 July 2025).
+
+**EKI‑RC** – EKI Runosong Corpus. Institute of the Estonian Language. *EKI regilaulukorpus* (2019‑2024), derived from the 1969–1974 *Regilaulud. Antoloogia* volumes; (Internal project corpus; description in Ross 2015, *Keel ja Kirjandus*, 68 (6), 510‑539.) (Accessed 22 July 2025).
 
 **EKSS** – Explanatory Dictionary of the Estonian Language. Institute of the Estonian Language. *Eesti keele seletav sõnaraamat* (Online edition). https://www.eki.ee/dict/ekss/ (Accessed 22 July 2025).
 
@@ -290,9 +286,6 @@ This corpus was created using a combined index of lexical resources (175,493 uni
 
 **ERAB** – Oras, Janika; Saarlo, Liina; Sarv, Mari; Labi, Kanni; Uus, Merli; Šmitaite, Reda (comps.). Eesti Regilaulude Andmebaas / Database of Estonian Runosongs. Estonian Folklore Archives, Estonian Literary Museum. 2003 – present. URL: https://www.folklore.ee/regilaul/andmebaas
 
-**EMK** – Corpus of Estonian Dialects. University of Tartu, Institute of Estonian and General Linguistics. *Eesti murrete korpus*. https://datadoi.ee/handle/33/492 (Accessed 22 July 2025).
-
-**EKI‑RC** – EKI Runosong Corpus. Institute of the Estonian Language. *EKI regilaulukorpus* (2019‑2024), derived from the 1969–1974 *Regilaulud. Antoloogia* volumes; (Internal project corpus; description in Ross 2015, *Keel ja Kirjandus*, 68 (6), 510‑539.) (Accessed 22 July 2025).
 
 ## Citation and Licence
 

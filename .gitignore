@@ -59,3 +59,4 @@ analysis_temp/
 # User-generated analysis results
 user_analysis/
 custom_exports/
+baseline_corpus.json
