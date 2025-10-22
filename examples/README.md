@@ -35,6 +35,46 @@ cd examples
 python advanced_analysis.py
 ```
 
+### view_poem.py ⭐ NEW
+
+View complete annotated Estonian runosong poems with morphological annotations preserved in order:
+- Display complete texts with annotations
+- Filter poems by confidence, length, POS tags, or methods
+- Export poems to JSON format
+- View corpus-wide statistics
+
+**Usage:**
+```bash
+cd examples
+
+# View specific poem
+python view_poem.py 89248
+
+# View with detailed annotations
+python view_poem.py 89248 --detailed
+
+# Random selection with filters
+python view_poem.py --random 5 --min-confidence 0.9
+
+# Export poem
+python view_poem.py 89248 --export poem_89248.json
+```
+
+### generate_poem_index.py ⭐ NEW
+
+Generate the poem-level index from batch annotation files. This tool reconstructs the complete corpus with word order preserved.
+
+**Usage:**
+```bash
+cd examples
+
+# Generate complete index
+python generate_poem_index.py --batch-dir /path/to/batches --output ../poems_index.json.gz
+
+# Generate sample for testing
+python generate_poem_index.py --batch-dir /path/to/batches --output ../sample.json.gz --sample 10
+```
+
 ## SQL Examples
 
 ### query_examples.sql

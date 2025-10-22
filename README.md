@@ -52,6 +52,7 @@ This corpus provides automated morphological annotation of Estonian dialectal ru
 
 - **`corpus_ambiguity_validated.json.gz`** (34 MB) - Corpus with EstNLTK-validated lemmas
 - **`corpus_ambiguity_validated.db`** (73 MB) - SQLite database for efficient querying
+- **`poems_index.json.gz`** (81 MB) - Complete poem index with preserved word order and annotations ⭐ NEW
 - **`DOCUMENTATION_ET.md`** - Estonian language documentation of annotation process
 - **`examples/`** - Code examples for using the corpus
 
@@ -213,6 +214,124 @@ ORDER BY total_uses DESC;
 ```
 
 See the `examples/` directory for more code samples.
+
+## Viewing Complete Annotated Texts
+
+The corpus includes a poem-level index (`poems_index.json.gz`) that allows viewing complete texts with their morphological annotations preserved in order.
+
+### Quick Start
+
+```bash
+cd examples
+
+# View a specific poem
+python view_poem.py 89248
+
+# View with detailed annotations
+python view_poem.py 89248 --detailed
+
+# View random poems
+python view_poem.py --random 5
+
+# Filter and view high-quality poems
+python view_poem.py --random 3 --min-confidence 0.95
+```
+
+### Example Output
+
+```
+================================================================================
+POEM ID: 89248
+================================================================================
+Source batch: batch_00001
+Row index: 0
+Number of words: 80
+Average confidence: 0.960
+POS distribution: {'S': 29, 'D': 12, 'P': 10, 'V': 23, 'K': 2, 'A': 4}
+
+--------------------------------------------------------------------------------
+ORIGINAL TEXT:
+--------------------------------------------------------------------------------
+piiri pääri pääsuke kus su kullas pesake kuivand kuuse otsas...
+
+--------------------------------------------------------------------------------
+ANNOTATED TEXT (word/lemma(POS)):
+--------------------------------------------------------------------------------
+piiri/piir(S) pääri/praegu(S) pääsuke/pääsukene(S) kus/kus(D) su/sa(P)
+kullas/kuld(S) pesake/pesa(S) kuivand/kuivama(V) kuuse/kuusk(S)...
+================================================================================
+```
+
+### Advanced Usage
+
+**Filter by criteria:**
+```bash
+# Poems with specific POS tag
+python view_poem.py --random 5 --pos-contains V
+
+# Short poems only
+python view_poem.py --random 10 --max-words 50
+
+# High-confidence long poems
+python view_poem.py --random 3 --min-confidence 0.9 --min-words 100
+```
+
+**Export poems:**
+```bash
+# Export single poem to JSON
+python view_poem.py 89248 --export poem_89248.json
+
+# Export multiple poems
+python view_poem.py 89248 89249 89250 --export poems_batch_1.json
+```
+
+**Corpus statistics:**
+```bash
+python view_poem.py --list-stats
+```
+
+### Poem Index Structure
+
+The `poems_index.json.gz` file (81 MB compressed) contains all 108,969 poems with complete annotation data:
+
+```json
+{
+  "metadata": {
+    "version": "v1",
+    "total_poems": 108969,
+    "total_words": 7344574,
+    "avg_words_per_poem": 67.4
+  },
+  "poems": {
+    "89248": {
+      "text": "piiri pääri pääsuke...",
+      "words": [
+        {
+          "original": "piiri",
+          "lemma": "piir",
+          "pos": "S",
+          "form": "sg_g",
+          "method": "estnltk+dict",
+          "confidence": 1.0
+        },
+        ...
+      ],
+      "batch": "batch_00001",
+      "row_index": 0,
+      "num_words": 80
+    }
+  }
+}
+```
+
+### Regenerating Poem Index
+
+If you have the original batch files, you can regenerate the poem index:
+
+```bash
+cd examples
+python generate_poem_index.py --batch-dir /path/to/batches --output ../poems_index.json.gz
+```
 
 ## Annotation Methodology
 
