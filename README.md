@@ -579,10 +579,20 @@ This corpus was created using a combined index of lexical resources (175,493 uni
 
 **ERAB** – Oras, Janika; Saarlo, Liina; Sarv, Mari; Labi, Kanni; Uus, Merli; Šmitaite, Reda (comps.). Eesti Regilaulude Andmebaas / Database of Estonian Runosongs. Estonian Folklore Archives, Estonian Literary Museum. 2003 – present. URL: https://www.folklore.ee/regilaul/andmebaas
 
+### Morphological Processing
+
+The corpus annotations were generated using **EstNLTK 1.7.4** (Laur et al., 2020) morphological analyzer, which incorporates **Vabamorf** (Kaalep & Vaino, 2001) as its underlying morphological analysis engine.
+
+**References:**
+
+Kaalep, H. J., & Vaino, T. (2001). Complete morphological analysis in the linguist's toolbox. *Congressus Nonus Internationalis Fenno-Ugristarum*, *5*, 9-16.
+
+Laur, S., Orasmaa, S., Särg, D., & Tammo, P. (2020). EstNLTK 1.6: Remastered Estonian NLP pipeline. *Proceedings of the Twelfth Language Resources and Evaluation Conference* (pp. 7152–7160). European Language Resources Association.
+
 
 ## Citation and Licence
 
-If you intend to use this corpus in your research, please contact first:
+If you intend to use this corpus, please contact first:
 
 ```
 kaarel.veskis@kirmus.ee
