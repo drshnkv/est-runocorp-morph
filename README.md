@@ -410,6 +410,91 @@ cd examples
 python generate_poem_index.py --batch-dir /path/to/batches --output ../poems_index.json.gz
 ```
 
+## Lemma Overview CSV
+
+A comprehensive CSV overview of all lemmas is provided for human quality review and linguistic analysis. The CSV contains 21 columns with detailed information about each lemma.
+
+### Quick Start
+
+```bash
+# Generate the CSV (already provided in corpus)
+python3 generate_lemma_overview_v2.py
+
+# Output: lemma_overview_v2.csv (3.4 MB, 125,600 lemmas)
+```
+
+### CSV Columns
+
+The CSV includes 21 columns organized into categories:
+
+**Core Identification:**
+- `lemma` - The lemma form
+- `total_occurrences` - Total instances across corpus
+- `num_word_forms` - Number of distinct word forms
+
+**Word Form Details:**
+- `word_forms_sample` - Top 10 forms with counts (e.g., "piiri(787); piire(520)")
+- `most_frequent_form` - Most common word form
+- `most_frequent_form_count` - Count of most frequent form
+- `most_frequent_form_pct` - Percentage of total occurrences
+
+**Linguistic Information:**
+- `pos_tags` - Part-of-speech tags (comma-separated)
+- `morph_forms` - Morphological forms (e.g., "sg_g, sg_p, pl_p")
+- `avg_confidence` - Average confidence score across all instances
+
+**Method & Quality Tracking:**
+- `primary_method` - Most frequently used lemmatization method
+- `methods_used` - All methods applied (comma-separated)
+- `has_validation` - Boolean, whether validation was applied
+- `validation_status` - "all_valid", "all_invalid", "mixed", or "none"
+- `validation_method` - Which validation method was used
+
+**Ambiguity & Quality Flags:**
+- `is_ambiguous` - Boolean, whether word has competing lemmas
+- `needs_review` - Boolean, whether expert review is recommended
+- `num_competing_lemmas` - Number of alternative lemma interpretations
+
+**Distribution Statistics:**
+- `form_diversity_score` - Ratio of forms to occurrences (type/token)
+- `min_confidence` - Lowest confidence across instances
+- `max_confidence` - Highest confidence across instances
+
+### Usage Examples
+
+**Open in spreadsheet software:**
+```bash
+# LibreOffice Calc, Excel, Google Sheets, etc.
+open lemma_overview_v2.csv
+```
+
+**Sort and filter strategies:**
+- **High-frequency review**: Sort by `total_occurrences` descending
+- **Validation changes**: Filter `has_validation = TRUE`
+- **Potential issues**: Filter `validation_status = all_invalid` and `total_occurrences > 100`
+- **Ambiguous cases**: Filter `is_ambiguous = TRUE` and `needs_review = TRUE`
+- **Quality assessment**: Sort by `avg_confidence` ascending to find low-confidence lemmas
+
+### Statistics
+
+From the generated CSV:
+- **Total lemmas**: 125,600
+- **With validation**: 30,584 (24.4%)
+- **Ambiguous**: 12,159 (9.7%)
+- **Need review**: 9,729
+- **All valid validation**: 9,729
+- **All invalid validation**: 20,855
+
+### Top Frequency Lemmas
+
+| Lemma | Occurrences | Forms | Status |
+|-------|-------------|-------|--------|
+| olema | 190,290 | 1,319 | all_valid |
+| ma | 137,461 | 8 | all_invalid |
+| mina | 122,915 | 851 | all_valid |
+| see | 93,705 | 966 | all_valid |
+| ei | 85,667 | 561 | all_valid |
+
 ## Annotation Methodology
 
 ### Processing Pipeline
