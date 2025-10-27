@@ -1,10 +1,10 @@
 # Estonian Runosong Morphological Corpus
 
-> **⚠️ Experimental Non-LLM Baseline Corpus – Version 1**
+> **⚠️ Experimental Non-LLM Baseline Corpus**
 >
-> This corpus represents preliminary automated morphological annotation using **EstNLTK + lexical resources** for archaic dialectal Estonian texts.
+> This corpus represents automated morphological annotation using **EstNLTK + lexical resources** with validation-based improvements for archaic dialectal Estonian texts.
 >
-> **Estimated accuracy: ca 70%** based on preliminary non-conclusive evaluation.  The confidence scores (average 0.92) reflect method reliability estimates, not actual annotation accuracy. This corpus serves as a methodological baseline for comparing with LLM-based approaches, which show better results but are still work in progress.
+> **Accuracy evaluation:** Awaits manual gold standard validation. Previous cross-reference with LLM annotations (361 Järva poems) showed 74.4% baseline accuracy. The confidence scores (average 0.92) reflect method reliability estimates, not actual annotation accuracy. This corpus serves as a methodological baseline for comparing with LLM-based approaches.
 
 A morphologically annotated corpus of 108,969 Estonian runosongs (traditional folk poetry), containing 7.3 million word instances processed with non-LLM methods.
 
@@ -15,27 +15,35 @@ This corpus provides automated morphological annotation of Estonian dialectal ru
 
 ## Corpus Statistics
 
-- **Total word instances processed**: 7,302,185
-- **Unique word forms**: 427,472
-- **Unique lemmas generated**: 167,994
-- **Average occurrences per word**: 17.1
+- **Total word instances processed**: 7,344,574
+- **Unique word forms**: 452,161
+- **Unique lemmas generated**: 125,600
+- **Average occurrences per word**: 16.2
 - **Texts processed**: 108,969 runosong poems
-- **Unknown words**: 42,389 (0.58%)
+- **Unknown words**: 42,389 (0.58%) - now included for complete coverage
 - **Average confidence score**: 0.92 (method reliability, not accuracy)
 
 ### Method Distribution
 
 | Method | Word Count | Percentage | Avg Confidence |
 |--------|-----------|------------|----------------|
-| manual_override | 2,713,782 | 37.2% | 1.000 |
-| estnltk+dict | 2,423,711 | 33.2% | 1.000 |
-| estnltk | 1,010,589 | 13.8% | 0.950 |
-| dict | 617,085 | 8.5% | 0.647 |
-| levenshtein | 261,191 | 3.6% | 0.310 |
-| suffix_strip | 213,645 | 2.9% | 0.800 |
-| compound | 53,136 | 0.7% | 0.300 |
-| h_variation | 7,665 | 0.1% | 0.700 |
-| hybrid_corrected | 1,381 | 0.0% | 0.779 |
+| manual_override | 2,713,782 | 36.95% | 1.000 |
+| estnltk+dict | 2,267,138 | 30.87% | 1.000 |
+| estnltk | 696,829 | 9.49% | 0.950 |
+| dict | 566,448 | 7.71% | 0.647 |
+| levenshtein | 248,009 | 3.38% | 0.310 |
+| suffix_strip | 203,696 | 2.77% | 0.800 |
+| estnltk+dict_jarva_claude_3.5 | 155,068 | 2.11% | 1.000 |
+| estnltk_validation_levenshtein_valid | 111,666 | 1.52% | 0.867 |
+| estnltk_jarva_claude_3.5 | 65,682 | 0.89% | 1.000 |
+| dict_jarva_claude_3.5 | 45,397 | 0.62% | 1.000 |
+| unknown | 42,070 | 0.57% | 0.000 |
+| compound | 31,617 | 0.43% | 0.300 |
+| estnltk_validation_compound_invalid | 23,545 | 0.32% | 0.000 |
+| estnltk_validation_suffix_strip_valid | 19,617 | 0.27% | 0.610 |
+| (others) | ~17,000 | ~0.23% | varies |
+
+**Note:** Methods with `_validation_` suffix indicate validation-based improvements applied in v5. `_valid` suffix means validation confirmed the lemma, `_invalid` means validation identified issues.
 
 ### Quality Distribution
 
@@ -48,22 +56,36 @@ This corpus provides automated morphological annotation of Estonian dialectal ru
 
 ## Files Included
 
-### Current Version (v4 - October 2025) ✨ NEW
+### Current Version (v5 - October 2025) ✨ NEW
 
-- **`corpus_ambiguity_validated.json.gz`** (34 MB) - Corpus with EstNLTK-validated lemmas
-- **`corpus_ambiguity_validated.db`** (73 MB) - SQLite database for efficient querying
-- **`poems_index.json.gz`** (81 MB) - Complete poem index with preserved word order and annotations ⭐ NEW
+- **`corpus_validation_improved.json.gz`** (33 MB) - Corpus with validation-based improvements and complete vocabulary
+- **`corpus_validation_improved.db`** (77 MB) - SQLite database for efficient querying
+- **`poems_index.json.gz`** (82 MB) - Complete poem index with preserved word order and annotations
 - **`DOCUMENTATION_ET.md`** - Estonian language documentation of annotation process
 - **`examples/`** - Code examples for using the corpus
 
-**What's new in v4:**
+**What's new in v5:**
+- **Validation improvements**: 214,968 corrections (2.93% of corpus) based on EstNLTK validation
+- **Complete vocabulary**: Unknown words now included (42,389 words, 0.58%)
+- **Invalid lemma cleanup**: 167,994 → 125,600 unique lemmas (-25.2%)
+- **Method provenance**: Enhanced tracking with `_validation_[method]_[status]` format
+- **Quality preservation**: 2,994,162 high-quality lemmas preserved (manual + Järva)
+- **Validation performance**: 67.9% success rate (146,038 valid / 214,968 total corrections)
+
+### Previous Versions
+
+#### v4 (October 2025)
+
+- **`corpus_ambiguity_validated.json.gz`** (34 MB) - Corpus with EstNLTK-validated lemmas
+- **`corpus_ambiguity_validated.db`** (73 MB) - SQLite database
+
+**What was new in v4:**
 - **Ambiguity validation**: 12,835 invalid lemmas corrected (70,953 instances)
 - **EstNLTK strict validation**: All competing lemmas validated against Estonian dictionary
 - **42.5% ambiguity reduction**: From 24,777 to 14,238 truly ambiguous words
 - **Method tracking**: New `_estnltk_validated` suffix for corrected words
-- **Preservation**: True ambiguity (9,466 words) and dialectal forms (3,484 words) maintained
 
-### Previous Version (v3 - October 2025)
+#### v3 (October 2025)
 
 - **`corpus_fixed_ambiguity_strict.json.gz`** (34 MB) - Corpus with Järva improvements and fixed ambiguity detection
 - **`corpus_fixed_ambiguity_strict.db`** (75 MB) - SQLite database
@@ -82,10 +104,19 @@ This corpus provides automated morphological annotation of Estonian dialectal ru
 
 ### JSON Format (Primary)
 
-The JSON corpus contains complete morphological annotation with the following structure:
+The JSON corpus contains complete morphological annotation with 8 main sections:
 
 ```json
 {
+  "metadata": {
+    "total_words": 7344574,
+    "unique_forms": 452161,
+    "unique_lemmas": 125600,
+    "created": "2025-10-27 12:21:33",
+    "version": "v5_validation_improved",
+    "features": ["aggregated_storage", "reverse_lemma_index", "source_poem_tracking", "..."]
+  },
+
   "words": {
     "piiri": {
       "lemmas": ["piir"],
@@ -97,9 +128,10 @@ The JSON corpus contains complete morphological annotation with the following st
       "total_count": 787,
       "first_seen": "batch_00001",
       "last_seen": "batch_01090",
-      "source_poems": ["ERA.1.1.1", "..."]
+      "source_poems": ["89248", "89249", "..."]
     }
   },
+
   "lemma_index": {
     "piir": {
       "word_forms": ["piir", "piiri", "piire", "piirid"],
@@ -109,6 +141,7 @@ The JSON corpus contains complete morphological annotation with the following st
       }
     }
   },
+
   "ambiguous_words": {
     "kand": {
       "total_occurrences": 57,
@@ -116,11 +149,55 @@ The JSON corpus contains complete morphological annotation with the following st
         "kand": {"chosen": 45, "rejected": 0, "confidence_avg": 0.85},
         "kanna": {"chosen": 12, "rejected": 45, "confidence_avg": 0.75}
       },
+      "alternatives_seen": ["kand", "kanna"],
       "needs_review": true
     }
-  }
+  },
+
+  "method_analytics": {
+    "estnltk+dict": {
+      "total_uses": 2267138,
+      "avg_confidence": 1.0,
+      "by_pos": {
+        "S": {"count": 1245678, "avg_confidence": 1.0},
+        "V": {"count": 567890, "avg_confidence": 1.0}
+      }
+    }
+  },
+
+  "morphological_patterns": {
+    "S_sg_n": {"count": 567890, "avg_confidence": 0.95},
+    "V_ma": {"count": 234567, "avg_confidence": 0.92}
+  },
+
+  "quality_tiers": {
+    "high_confidence": {"unique_words": 240485, "percentage": 53.2},
+    "medium_confidence": {"unique_words": 55611, "percentage": 12.3},
+    "low_confidence": {"unique_words": 16153, "percentage": 3.6},
+    "needs_review": {"unique_words": 139912, "percentage": 30.9}
+  },
+
+  "corpus_timeline": [
+    {
+      "batch_num": 1,
+      "cumulative_words": 7345,
+      "cumulative_unique_forms": 2134,
+      "cumulative_lemmas": 1567
+    }
+  ]
 }
 ```
+
+**Section descriptions:**
+
+1. **`metadata`** - Corpus-level statistics and build information
+2. **`words`** - Main word form index (452,161 unique forms) with aggregated statistics
+3. **`lemma_index`** - Reverse index from lemmas to word forms (125,600 lemmas, **alphabetically sorted**)
+4. **`ambiguous_words`** - Words with multiple competing lemma interpretations (14,105 words)
+5. **`method_analytics`** - Performance statistics for each lemmatization method (76 methods)
+6. **`morphological_patterns`** - Distribution of POS + morphological form combinations (81 patterns)
+7. **`quality_tiers`** - Quality categorization statistics (4 tiers)
+8. **`corpus_timeline`** - Progressive statistics as batches were processed (1,090 entries)
 
 ### SQLite Schema
 
@@ -369,19 +446,31 @@ The frequency component helps select more likely correct lemmas, as words appear
 
 ## Lemma Validation Status
 
-Of 160,024 unique lemmas generated:
-- **61,024 (38.1%)** can be validated with standard Estonian morphology (using EstNLTK/Vabamorf)
-- **99,000 (61.9%)** are archaic/dialectal forms or unvalidated word forms
+**V5 Validation Results** (125,600 unique lemmas):
+- **61,378 lemmas validated (48.9%)** using VabamorfAnalyzer
+- **+10.8 percentage point improvement** over v4 (38.1% → 48.9%)
+- **+354 more valid lemmas** than v4 despite smaller inventory
+- **Previous v4**: 61,024 / 160,024 (38.1%) validated
 
 **Validation history:**
 - Oct 14 (pre-corrections): 23.7% valid (51,341 / 216,357 lemmas)
 - Oct 16 (after Tier 1+2+3): 31.6% valid (60,993 / 192,756 lemmas)
-- Oct 19 (after improvements based on 361 Järvamaa runosongs annotated with Claude Sonnet 3.5): 31.7% valid (61,024 / 192,434 lemmas)
+- Oct 19 (after Järva improvements): 31.7% valid (61,024 / 192,434 lemmas)
 - Oct 20 (after ambiguity validation): 38.1% valid (61,024 / 160,024 lemmas)
-  - **Removed 32,410 invalid lemmas** from ambiguous words
-  - Validation improvement: **+6.4 percentage points**
+- **Oct 27 (v5 - after validation improvements)**: 125,600 unique lemmas
+  - **214,968 validation-based corrections applied** (2.93% of corpus)
+  - **67.9% correction success rate** (146,038 valid / 214,968 total)
+  - **Invalid lemma cleanup**: Removed 42,394 invalid lemmas (167,994 → 125,600)
+  - **Unknown words included**: All 42,389 unknown words now in corpus
 
-Note: Validation means the lemma is recognized by standard Estonian morphological tools, not that the lemmatization is necessarily correct for the specific context. Järva improvements (280,380 corrections) were based on high-quality LLM annotations achieving 91.20% accuracy vs gold standard.
+**Validation method performance (v5):**
+- **Dict**: 91.4% valid (896 / 980 corrections)
+- **Levenshtein**: 86.7% valid (121,232 / 139,875 corrections)
+- **H-variation**: 81.6% valid (2,651 / 3,250 corrections)
+- **Suffix-strip**: 61.0% valid (21,259 / 34,850 corrections)
+- **Compound**: 0.0% valid (morphological decompositions, informative)
+
+Note: Validation means the lemma is recognized by standard Estonian morphological tools. Järva improvements (280,380 corrections) achieved 91.20% accuracy vs gold standard. V5 validation improvements complementary to Järva, targeting different error patterns.
 
 ## Lexical Resources
 
