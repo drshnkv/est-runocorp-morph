@@ -7,7 +7,7 @@
 #   ./run_queries.sh 1 5 9        # Run specific query numbers
 #   ./run_queries.sh --list       # List all available queries
 
-DB_FILE="../corpus_runosongs_v2_FIXED.db"
+DB_FILE="../corpus_validation_improved.db"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # Check if database exists

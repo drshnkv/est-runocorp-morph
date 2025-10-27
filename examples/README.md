@@ -114,7 +114,7 @@ cd examples
 **Option 2: Direct SQLite (for custom queries):**
 ```bash
 # Interactive mode with formatting
-sqlite3 ../corpus_runosongs_v2_FIXED.db
+sqlite3 ../corpus_validation_improved.db
 .mode column
 .headers on
 
@@ -136,7 +136,7 @@ SELECT word_form, count FROM lemma_variants WHERE lemma = 'piir' LIMIT 10;
 
 1. **Check corpus files are available:**
    ```bash
-   ls -lh ../corpus_runosongs_v2_*
+   ls -lh ../corpus_validation_improved.*
    ```
 
 2. **Run basic Python example:**
@@ -146,7 +146,7 @@ SELECT word_form, count FROM lemma_variants WHERE lemma = 'piir' LIMIT 10;
 
 3. **Try SQL queries:**
    ```bash
-   sqlite3 ../corpus_runosongs_v2_FIXED.db "SELECT * FROM method_stats;"
+   sqlite3 ../corpus_validation_improved.db "SELECT * FROM method_stats;"
    ```
 
 ## Example Output

@@ -263,7 +263,7 @@ def analyze_ambiguity_patterns(corpus):
 def main():
     """Run advanced analyses"""
     print("Loading corpus...")
-    with gzip.open('../corpus_runosongs_v2_corrected_FIXED.json.gz', 'rt', encoding='utf-8') as f:
+    with gzip.open('../corpus_validation_improved.json.gz', 'rt', encoding='utf-8') as f:
         corpus = json.load(f)
     print(f"✅ Loaded corpus with {len(corpus['words']):,} unique words")
 
