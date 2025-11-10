@@ -114,7 +114,7 @@ cd examples
 **Option 2: Direct SQLite (for custom queries):**
 ```bash
 # Interactive mode with formatting
-sqlite3 ../corpus_validation_improved.db
+sqlite3 ../corpus_unknown_reduced.db
 .mode column
 .headers on
 
@@ -136,7 +136,7 @@ SELECT word_form, count FROM lemma_variants WHERE lemma = 'piir' LIMIT 10;
 
 1. **Check corpus files are available:**
    ```bash
-   ls -lh ../corpus_validation_improved.*
+   ls -lh ../corpus_unknown_reduced.*
    ```
 
 2. **Run basic Python example:**
@@ -146,7 +146,7 @@ SELECT word_form, count FROM lemma_variants WHERE lemma = 'piir' LIMIT 10;
 
 3. **Try SQL queries:**
    ```bash
-   sqlite3 ../corpus_validation_improved.db "SELECT * FROM method_stats;"
+   sqlite3 ../corpus_unknown_reduced.db "SELECT * FROM method_stats;"
    ```
 
 ## Example Output
@@ -184,5 +184,4 @@ dict             617085      8.5         0.647
 ## Further Reading
 
 - See `../README.md` for corpus overview and statistics
-- See `../DOCUMENTATION_ET.md` for Estonian-language documentation of annotation process
 
