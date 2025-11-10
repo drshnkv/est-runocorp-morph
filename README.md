@@ -1,12 +1,12 @@
 # Estonian Runosong Morphological Corpus
 
-> **⚠️ Experimental Non-LLM Baseline Corpus**
+> **⚠️ Experimental Mixed-Method Annotation Corpus**
 >
-> This corpus represents automated morphological annotation using **EstNLTK + lexical resources** with validation-based improvements for archaic dialectal Estonian texts.
+> This corpus represents automated morphological annotation using **EstNLTK + lexical resources** combined with **manual expert corrections** (37%) and **LLM-assisted annotations from Järva subcorpus** (2.9%), with validation-based improvements for archaic dialectal Estonian texts.
 >
 > **Accuracy evaluation:** See "Evaluation Methodology and Results" section below for performance metrics. The confidence scores (average 0.92) reflect method reliability estimates, not actual annotation accuracy. This corpus serves as a methodological baseline for comparing with LLM-based approaches.
 
-A morphologically annotated corpus of 108,969 Estonian runosongs (traditional folk poetry), containing 7.3 million word instances processed with non-LLM methods.
+A morphologically annotated corpus of 108,969 Estonian runosongs (traditional folk poetry), containing 7.3 million word instances processed using a mixed-method approach combining automated methods, manual expert annotations, and LLM assistance.
 
 ## Overview
 
@@ -508,16 +508,6 @@ From v6 corpus:
 - **Unknown words**: 6,190 (0.08%) - 85.3% reduction from v5
 - **Neurotõlge VRO corrections**: 35,874 (0.49% of corpus)
 
-### Top Frequency Lemmas
-
-| Lemma | Occurrences | Forms | Status |
-|-------|-------------|-------|--------|
-| olema | 190,290 | 1,319 | all_valid |
-| ma | 137,461 | 8 | all_invalid |
-| mina | 122,915 | 851 | all_valid |
-| see | 93,705 | 966 | all_valid |
-| ei | 85,667 | 561 | all_valid |
-
 ## Annotation Methodology
 
 ### Processing Pipeline
@@ -530,22 +520,23 @@ From v6 corpus:
 6. **Other methods** (4%): Suffix stripping, h-variation, compound analysis, etc.
 
 
-###  Automated follow-up correction cycles based on the ranking system and other filtration criteria
+### Example Automated Correction Cycle
 
-Ranking system:
+Multiple automated correction cycles were applied to improve lemma quality, including high-confidence tier corrections, Järva subcorpus improvements (280,380 corrections), validation-based improvements (214,968 corrections), and Neurotõlge VRO dialectal corrections (35,874 corrections).
+
+**Example ranking system for lemma candidate selection:**
 
 For selecting among multiple lemma candidates:
 - **60%** edit distance (Levenshtein distance from original form)
 - **40%** frequency score (based on University of Tartu literary corpus)
 
-The frequency component helps select more likely correct lemmas, as words appearing more frequently in literary texts are generally more common in runosongs as well. Tested on 448,217 low-confidence words, resulting in 119,184 (26.6%) alternative lemmas selected.
+The frequency component helps select more likely correct lemmas, as words appearing more frequently in literary texts are generally more common in runosongs as well. This approach was tested on 448,217 low-confidence words, resulting in 119,184 (26.6%) alternative lemmas selected.
 
 
 ## Key Features
 
 - **POS tagging**: Morphological classification for processed words
 - **Morphological forms**: Case/number/tense markers (sg_g, pl_p, etc.)
-- **Quality categorization**: Four-tier assessment based on method and validation
 - **Method tracking**: Transparent annotation provenance for each word
 - **Source traceability**: Links to original poem identifiers
 - **Confidence scoring**: 0-1 scale reflecting method reliability (not accuracy)
@@ -637,6 +628,8 @@ This corpus was created using a combined index of lexical resources (175,493 uni
 **ERLA** – Glossary of Rare and Obscure Folk‑Song Words. Estonian Literary Museum. *Harva ja vähem‑kasutatavate sõnade sõnastik*, in *Regilaulud. Antoloogia* corpus. https://www.folklore.ee/laulud/erla/ (Accessed 22 July 2025).
 
 **ERAB** – Oras, Janika; Saarlo, Liina; Sarv, Mari; Labi, Kanni; Uus, Merli; Šmitaite, Reda (comps.). Eesti Regilaulude Andmebaas / Database of Estonian Runosongs. Estonian Folklore Archives, Estonian Literary Museum. 2003 – present. URL: https://www.folklore.ee/regilaul/andmebaas
+
+**UT-FIC** – The Frequency List of Estonian Literary Language. University of Tartu, Computational Linguistics. Fiction subcorpus lemma frequencies from the Balanced Corpus of Estonian (15 million words). https://www.cl.ut.ee/ressursid/sagedused1/failid/lemma_ilu_kahanevas.txt (Accessed November 2025).
 
 
 ## Tools Used
