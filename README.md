@@ -4,7 +4,7 @@
 >
 > This corpus represents automated morphological annotation using **EstNLTK + lexical resources** with validation-based improvements for archaic dialectal Estonian texts.
 >
-> **Accuracy evaluation:** Awaits manual gold standard validation. Previous cross-reference with LLM annotations (361 Järva poems) showed 74.4% baseline accuracy. The confidence scores (average 0.92) reflect method reliability estimates, not actual annotation accuracy. This corpus serves as a methodological baseline for comparing with LLM-based approaches.
+> **Accuracy evaluation:** See "Evaluation Methodology and Results" section below for performance metrics. The confidence scores (average 0.92) reflect method reliability estimates, not actual annotation accuracy. This corpus serves as a methodological baseline for comparing with LLM-based approaches.
 
 A morphologically annotated corpus of 108,969 Estonian runosongs (traditional folk poetry), containing 7.3 million word instances processed with non-LLM methods.
 
@@ -595,6 +595,8 @@ Note: Validation means the lemma is recognized by standard Estonian morphologica
 ## Evaluation Methodology and Results
 
 The corpus quality was evaluated using a gold standard of 6,405 manually annotated words from 94 Estonian runosong poems. A context-aware instance-level train/test split methodology was employed, with 4,053 TRAIN words (63.3%) used for manual override annotations and 2,352 TEST words (36.7%) reserved for independent evaluation.
+
+> **Note:** This evaluation was performed on a previous version of the corpus (v5 - October 2025). The current v6 version (November 2025) includes additional Neurotõlge VRO improvements (35,874 corrections, 0.49% of corpus) that further reduce unknown words by 85.3% (42,070 → 6,190). Performance metrics below reflect the v5 baseline.
 
 ### Automatic Lemmatization Performance
 
