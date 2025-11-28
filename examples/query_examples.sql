@@ -1,5 +1,5 @@
 -- Estonian Runosong Morphological Corpus - SQL Query Examples
--- Database: corpus_validation_improved.db
+-- Database: corpus_unknown_reduced.db
 
 -- ============================================================
 -- BASIC QUERIES

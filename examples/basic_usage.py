@@ -14,7 +14,7 @@ import json
 import gzip
 from collections import Counter
 
-def load_corpus(path='../corpus_validation_improved.json.gz'):
+def load_corpus(path='../corpus_unknown_reduced.json.gz'):
     """Load the compressed JSON corpus"""
     print(f"Loading corpus from {path}...")
     with gzip.open(path, 'rt', encoding='utf-8') as f:
