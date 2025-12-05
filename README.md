@@ -603,23 +603,36 @@ Note: Validation means the lemma is recognized by standard Estonian morphologica
 
 ## Evaluation Methodology and Results
 
-The corpus was evaluated against a gold standard of 6,405 manually annotated words from 94 poems. To avoid circular validation, we excluded 4,053 words where manual lemmas from the gold standard were directly imported into the corpus as `manual_override` entries. The remaining 2,352 words were lemmatized by automatic methods only.
+### Train/Test Split
 
-> **Note:** Evaluation performed on v5 corpus (October 2025). Current version includes additional improvements.
+The corpus was evaluated against a gold standard of 6,405 manually annotated words from 94 poems. To avoid circular validation, the gold standard was split based on which word-lemma pairs were used for `manual_override` entries:
 
-### Automatic Method Performance
+| Set | Words | Poems | Purpose |
+|-----|------:|------:|---------|
+| TRAIN | 4,053 | 94 | Words used for manual_override (circular validation) |
+| TEST | 2,352 | 74 | Words NOT used for manual_override (independent evaluation) |
 
-Of the 2,352 evaluation words, 1,988 (84.5%) used purely automatic methods, achieving **66.35% accuracy**:
+### Three-Tier Evaluation Results
+
+| Tier | Description | Words | V5 Baseline | V7 Result | Change |
+|------|-------------|------:|------------:|----------:|-------:|
+| **Tier 1** | Pure automatic methods | 1,988 | 66.35% | **67.00%** | +0.65% |
+| **Tier 2** | Context-dependent | 364 | 37.64% | **36.81%** | -0.83% |
+| **Tier 3** | Overall TEST | 2,352 | 61.90% | **62.33%** | +0.43% |
+
+Tier 2 contains words where the same word form requires different lemmas in different contexts (polysemy). The corpus stores multiple lemmas per word form, but evaluation uses the highest-count lemma.
+
+### Automatic Method Performance (V7)
 
 | Method | Accuracy | Coverage |
 |--------|----------|----------|
-| estnltk+dict | 84.08% | 50.9% |
-| dict | 65.23% | 14.0% |
-| estnltk | 51.17% | 15.0% |
-| levenshtein | 39.44% | 7.1% |
-| suffix_strip | 41.05% | 4.8% |
+| estnltk+dict | 84.1% | 42.3% |
+| dict | 66.7% | 11.6% |
+| estnltk | 53.7% | 12.0% |
+| levenshtein | 40.4% | 5.8% |
+| suffix_strip | 41.9% | 4.0% |
 
-The remaining 364 words (15.5%) showed lower accuracy (37.64%) due to context-dependent polysemy—the corpus assigns one lemma per word form globally, causing errors when the same form requires different lemmas in different contexts.
+The V7 corpus with 223,374 DeepSeek lemma merge corrections shows +0.43% overall improvement while reducing unique lemmas by 12.2% (116,572 → 102,361).
 
 ## Lexical Resources 
 
