@@ -15,43 +15,47 @@ This corpus provides automated morphological annotation of Estonian dialectal ru
 
 ## Corpus Statistics
 
-### Current Version (corpus_unknown_reduced)
+### Current Version (v7 - corpus_deepseek_merged) ✨ NEW
 
 - **Total word instances processed**: 7,344,568
 - **Unique word forms**: 451,371
-- **Unique lemmas generated**: 116,572
+- **Unique lemmas generated**: 102,361 (-12.2% from v6)
+- **DeepSeek lemma merges**: 223,374 corrections applied
+- **Lemma consolidation**: Dialectal/orthographic variants merged into canonical forms
 - **Average occurrences per word**: 16.3
 - **Texts processed**: 108,969 runosong poems
-- **Unknown words**: 6,190 (0.08%) - **85.3% reduction** from v5
+- **Unknown words**: 6,190 (0.08%)
 - **Average confidence score**: 0.92 (method reliability, not accuracy)
 
-### Previous Version (v5) Statistics
+### Previous Version (v6 - corpus_unknown_reduced)
 
-- **Unknown words**: 42,070 (0.57%)
-- **Unique lemmas**: 125,162
+- **Unique lemmas**: 116,572
+- **Unknown words**: 6,190 (0.08%) - 85.3% reduction from v5
+- **Neurotõlge VRO corrections**: 35,874
 
-### Method Distribution
+### Method Distribution (v7)
 
 | Method | Word Count | Percentage | Avg Confidence |
 |--------|-----------|------------|----------------|
-| manual_override | 2,713,782 | 36.95% | 1.000 |
-| estnltk+dict | 2,267,138 | 30.87% | 1.000 |
-| estnltk | 696,829 | 9.49% | 0.950 |
-| dict | 566,448 | 7.71% | 0.647 |
-| levenshtein | 248,009 | 3.38% | 0.310 |
-| suffix_strip | 203,696 | 2.77% | 0.800 |
-| estnltk+dict_jarva_claude_3.5 | 155,068 | 2.11% | 1.000 |
-| estnltk_validation_levenshtein_valid | 111,666 | 1.52% | 0.867 |
-| estnltk_jarva_claude_3.5 | 65,682 | 0.89% | 1.000 |
-| dict_jarva_claude_3.5 | 45,397 | 0.62% | 1.000 |
-| neurotolge_vro | 35,874 | 0.49% | 0.000 |
-| compound | 31,617 | 0.43% | 0.300 |
-| unknown | 6,190 | 0.08% | 0.000 |
-| estnltk_validation_compound_invalid | 23,545 | 0.32% | 0.000 |
-| estnltk_validation_suffix_strip_valid | 19,617 | 0.27% | 0.610 |
-| (others) | ~17,000 | ~0.23% | varies |
+| manual_override | 2,686,600 | 36.58% | 1.000 |
+| estnltk+dict | 2,217,690 | 30.19% | 1.000 |
+| estnltk | 641,809 | 8.74% | 0.950 |
+| dict | 547,719 | 7.46% | 0.643 |
+| levenshtein | 232,575 | 3.17% | 0.308 |
+| suffix_strip | 194,334 | 2.65% | 0.800 |
+| estnltk+dict_jarva_claude_3.5 | 147,874 | 2.01% | 1.000 |
+| estnltk_validation_levenshtein_valid | 107,134 | 1.46% | 0.950 |
+| estnltk_jarva_claude_3.5 | 61,828 | 0.84% | 0.950 |
+| estnltk_estnltk_validated | 57,892 | 0.79% | 0.950 |
+| estnltk_deepseek_merged | 55,020 | 0.75% | 0.950 |
+| estnltk+dict_deepseek_merged | 49,448 | 0.67% | 1.000 |
+| dict_jarva_claude_3.5 | 42,745 | 0.58% | 0.662 |
+| neurotolge_vro | 33,950 | 0.46% | 0.000 |
+| manual_override_deepseek_merged | 27,182 | 0.37% | 1.000 |
+| compound | 26,471 | 0.36% | 0.300 |
+| (others) | ~214,000 | ~2.9% | varies |
 
-**Note:** Methods with `_validation_` suffix indicate validation-based improvements applied in v5. `_valid` suffix means validation confirmed the lemma, `_invalid` means validation identified issues.
+**Note:** Methods with `_deepseek_merged` suffix indicate lemmas consolidated via DeepSeek R1 validation (223,374 total corrections). Methods with `_validation_` suffix indicate validation-based improvements from v5.
 
 ### Quality Distribution
 
@@ -64,7 +68,17 @@ This corpus provides automated morphological annotation of Estonian dialectal ru
 
 ## Files Included
 
-### Current Version (v6 - November 2025) ✨ NEW
+### Current Version (v7 - December 2025) ✨ NEW
+
+- **`corpus_deepseek_merged.json.gz`** (35 MB) - Corpus with DeepSeek lemma merges
+
+**What's new in v7:**
+- **Lemma consolidation**: 102,361 unique lemmas (reduced from 116,572, -12.2%)
+- **DeepSeek R1 validation**: 223,374 lemma merge corrections applied
+- **Merged variants**: Dialectal/orthographic variants unified (e.g., neid→neiu, peig→peiu)
+- **Preserved features**: Neurotõlge VRO corrections, unknown word coverage maintained
+
+### Previous Version (v6 - November 2025)
 
 - **`corpus_unknown_reduced.json.gz`** (34 MB) - Corpus with Neurotõlge VRO improvements
 - **`corpus_unknown_reduced.db`** (77 MB) - SQLite database for efficient querying
@@ -73,15 +87,13 @@ This corpus provides automated morphological annotation of Estonian dialectal ru
 - **`DOCUMENTATION_ET.md`** - Estonian language documentation of annotation process
 - **`examples/`** - Code examples for using the corpus
 
-**What's new in v6:**
+**What was new in v6:**
 - **Unknown word reduction**: 85.3% decrease (42,070 → 6,190 instances)
 - **Neurotõlge VRO corrections**: 35,874 dialectal improvements (0.49% of corpus)
-- **Multi-word lemmas**: 2,145 contextual multi-word expressions (6.0% of corrections)
 - **Lemma consolidation**: 116,572 unique lemmas (reduced from 125,162)
 - **Coverage**: 99.92% of corpus now has valid lemmas
-- **Quality preservation**: All 2,994,162 high-quality lemmas from v5 preserved (manual + Járva + validation)
 
-### Previous Versions
+### Earlier Versions
 
 #### v5 (October 2025)
 
@@ -545,6 +557,12 @@ The frequency component helps select more likely correct lemmas, as words appear
 
 ## Lemma Validation Status
 
+**V7 DeepSeek Merged** (102,361 unique lemmas):
+- **12.2% lemma reduction** via DeepSeek R1 merge validation (116,572 → 102,361)
+- **223,374 merge corrections** across 1,090 batch files
+- **Dialectal variant unification** (e.g., neid→neiu: 14,593, peig→peiu: 6,045)
+- **All v6 features preserved** (Neurotõlge VRO, unknown word coverage)
+
 **V6 Unknown Words Reduced** (116,572 unique lemmas):
 - **85.3% unknown word reduction** via Neurotõlge VRO (42,070 → 6,190)
 - **35,874 VRO dialectal corrections** (0.49% of corpus)
@@ -585,27 +603,23 @@ Note: Validation means the lemma is recognized by standard Estonian morphologica
 
 ## Evaluation Methodology and Results
 
-The corpus quality was evaluated using a gold standard of 6,405 manually annotated words from 94 Estonian runosong poems. A context-aware instance-level train/test split methodology was employed, with 4,053 TRAIN words (63.3%) used for manual override annotations and 2,352 TEST words (36.7%) reserved for independent evaluation.
+The corpus was evaluated against a gold standard of 6,405 manually annotated words from 94 poems. To avoid circular validation, we excluded 4,053 words where manual lemmas from the gold standard were directly imported into the corpus as `manual_override` entries. The remaining 2,352 words were lemmatized by automatic methods only.
 
-> **Note:** This evaluation was performed on a previous version of the corpus (v5 - October 2025). The current v6 version (November 2025) includes additional Neurotõlge VRO improvements (35,874 corrections, 0.49% of corpus) that further reduce unknown words by 85.3% (42,070 → 6,190). Performance metrics below reflect the v5 baseline.
+> **Note:** Evaluation performed on v5 corpus (October 2025). Current version includes additional improvements.
 
-### Automatic Lemmatization Performance
+### Automatic Method Performance
 
-Pure automatic methods (estnltk+dict, dict, estnltk, levenshtein, suffix_strip) were evaluated on 1,988 TEST words (84.5% of the TEST set), achieving **66.35% accuracy** with no manual annotation involvement or test set contamination.
+Of the 2,352 evaluation words, 1,988 (84.5%) used purely automatic methods, achieving **66.35% accuracy**:
 
-The best-performing method, **estnltk+dict**, achieved **84.08% accuracy** on 50.9% of test words, demonstrating that hybrid approaches combining morphological analysis with dictionary lookup outperform single-method strategies for dialectal Estonian texts.
-
-### Method Performance Summary
-
-| Method | Accuracy | Coverage of Test |
-|--------|----------|------------------|
+| Method | Accuracy | Coverage |
+|--------|----------|----------|
 | estnltk+dict | 84.08% | 50.9% |
 | dict | 65.23% | 14.0% |
 | estnltk | 51.17% | 15.0% |
 | levenshtein | 39.44% | 7.1% |
 | suffix_strip | 41.05% | 4.8% |
 
-These results reflect the challenging nature of Estonian dialectal runosong texts, with their archaic forms and regional variation, while demonstrating that systematic hybrid approaches can achieve strong performance on standard word forms.
+The remaining 364 words (15.5%) showed lower accuracy (37.64%) due to context-dependent polysemy—the corpus assigns one lemma per word form globally, causing errors when the same form requires different lemmas in different contexts.
 
 ## Lexical Resources 
 
