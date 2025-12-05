@@ -603,9 +603,9 @@ Note: Validation means the lemma is recognized by standard Estonian morphologica
 
 ## Evaluation Methodology and Results
 
-### Train/Test Split
+### Gold Standard and Evaluation
 
-The corpus was evaluated against a gold standard of 6,405 manually annotated words from 94 poems. To avoid circular validation, the gold standard was split based on which word-lemma pairs were used for `manual_override` entries:
+The corpus was evaluated against a TEST set of 2,352 words from 74 poems. This TEST set was extracted from a larger gold standard (6,405 words, 94 poems) by excluding word-lemma pairs already used for corpus `manual_override` entries:
 
 | Set | Words | Poems | Purpose |
 |-----|------:|------:|---------|
