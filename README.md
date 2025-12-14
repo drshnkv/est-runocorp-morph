@@ -15,25 +15,40 @@ This corpus provides automated morphological annotation of Estonian dialectal ru
 
 ## Corpus Statistics
 
-### Current Version (v7 - corpus_deepseek_merged) ✨ NEW
+### Current Version (v8 - corpus_full_source_poems) ✨ NEW
 
 - **Total word instances processed**: 7,344,568
 - **Unique word forms**: 451,371
-- **Unique lemmas generated**: 102,361 (-12.2% from v6)
-- **DeepSeek lemma merges**: 223,374 corrections applied
-- **Lemma consolidation**: Dialectal/orthographic variants merged into canonical forms
+- **Unique lemmas generated**: 102,361
+- **Word-poem pairs tracked**: 5,252,911 (unlimited - was 100/word max)
+- **Unique poems in corpus**: 108,125
 - **Average occurrences per word**: 16.3
 - **Texts processed**: 108,969 runosong poems
 - **Unknown words**: 6,190 (0.08%)
 - **Average confidence score**: 0.92 (method reliability, not accuracy)
 
-### Previous Version (v6 - corpus_unknown_reduced)
+**What's new in v8:**
+- **Full source poem tracking**: Removes 100-poem-per-word limit from v7
+- **Per-poem occurrence counts**: `source_poems` now stores `{poem_id: count}` instead of list
+- **Lemma index source_poems**: Each lemma now tracks which poems it appears in with counts
+- **Statistical analysis ready**: Enables geographic distribution, per-poem frequency analysis, TTR calculations
+- **All v7 features preserved**: DeepSeek merges, Neurotõlge VRO corrections maintained
+
+### Previous Version (v7 - corpus_deepseek_merged)
+
+- **Total word instances**: 7,344,568
+- **Unique lemmas**: 102,361 (-12.2% from v6)
+- **DeepSeek lemma merges**: 223,374 corrections applied
+- **Lemma consolidation**: Dialectal/orthographic variants merged into canonical forms
+- **source_poems limitation**: Limited to 100 poems per word (fixed in v8)
+
+### Earlier Version (v6 - corpus_unknown_reduced)
 
 - **Unique lemmas**: 116,572
 - **Unknown words**: 6,190 (0.08%) - 85.3% reduction from v5
 - **Neurotõlge VRO corrections**: 35,874
 
-### Method Distribution (v7)
+### Method Distribution (v7/v8)
 
 | Method | Word Count | Percentage | Avg Confidence |
 |--------|-----------|------------|----------------|
@@ -61,24 +76,36 @@ This corpus provides automated morphological annotation of Estonian dialectal ru
 
 | Quality Tier | Unique Words | Percentage |
 |-------------|-------------|------------|
-| high_confidence | 240,848 | 56.3% |
-| medium_confidence | 55,663 | 13.0% |
-| low_confidence | 16,067 | 3.8% |
-| needs_review | 114,894 | 26.9% |
+| high_confidence | 240,264 | 53.2% |
+| medium_confidence | 55,608 | 12.3% |
+| low_confidence | 16,166 | 3.6% |
+| needs_review | 139,333 | 30.9% |
 
 ## Files Included
 
-### Current Version (v7 - December 2025) ✨ NEW
+### Current Version (v8 - December 2025) ✨ NEW
+
+- **`corpus_full_source_poems.json.gz`** (62 MB) - Corpus with full source poem tracking
+
+**What's new in v8:**
+- **Unlimited source_poems**: No more 100-poem limit per word (v7 had this limit)
+- **Per-poem counts**: `source_poems` now stores `{poem_id: occurrence_count}` instead of list
+- **Lemma source_poems**: `lemma_index` now includes `source_poems` field with per-poem counts
+- **Statistical enablement**: Word "ei" now has 31,988 poems tracked (was limited to 100)
+- **Lemma "olema"**: Now tracks 59,681 poems with occurrence counts
+- **All v7 features preserved**: DeepSeek merges, Neurotõlge VRO corrections, 102,361 lemmas
+
+### Previous Version (v7 - December 2025)
 
 - **`corpus_deepseek_merged.json.gz`** (35 MB) - Corpus with DeepSeek lemma merges
 
-**What's new in v7:**
+**What was new in v7:**
 - **Lemma consolidation**: 102,361 unique lemmas (reduced from 116,572, -12.2%)
 - **DeepSeek R1 validation**: 223,374 lemma merge corrections applied
 - **Merged variants**: Dialectal/orthographic variants unified (e.g., neid→neiu, peig→peiu)
-- **Preserved features**: Neurotõlge VRO corrections, unknown word coverage maintained
+- **source_poems limitation**: Limited to 100 poems per word (fixed in v8)
 
-### Previous Version (v6 - November 2025)
+### Earlier Version (v6 - November 2025)
 
 - **`corpus_unknown_reduced.json.gz`** (34 MB) - Corpus with Neurotõlge VRO improvements
 - **`corpus_unknown_reduced.db`** (77 MB) - SQLite database for efficient querying
@@ -145,14 +172,17 @@ The JSON corpus contains complete morphological annotation with 8 main sections:
   "metadata": {
     "total_words": 7344568,
     "unique_forms": 451371,
-    "unique_lemmas": 116572,
-    "created": "2025-11-10 12:09:25",
-    "modified": "2025-11-10 13:13:48",
-    "version": "v6_unknown_reduced",
-    "neurotolge_vro_applied": true,
-    "neurotolge_corrections": 35874,
-    "unknown_reduction": {"before": 42070, "after": 6190, "reduction_pct": 85.3},
-    "features": ["aggregated_storage", "reverse_lemma_index", "source_poem_tracking", "..."]
+    "unique_lemmas": 102361,
+    "created": "2025-12-14 HH:MM:SS",
+    "version": "v6_full_source_poems",
+    "features": [
+      "aggregated_storage",
+      "reverse_lemma_index",
+      "full_source_poem_tracking",
+      "source_poems_with_counts",
+      "lemma_index_source_poems",
+      "..."
+    ]
   },
 
   "words": {
@@ -166,19 +196,34 @@ The JSON corpus contains complete morphological annotation with 8 main sections:
       "total_count": 787,
       "first_seen": "batch_00001",
       "last_seen": "batch_01090",
-      "source_poems": ["89248", "89249", "..."]
+      "source_poems": {
+        "89248": 15,
+        "89250": 3,
+        "89255": 7,
+        "...": "..."
+      }
     }
   },
+
+> **v8 Note:** `source_poems` is now a dict mapping `poem_id → occurrence_count` (was a list limited to 100 entries in v7 and earlier). The sum of all values equals `total_count`.
 
   "lemma_index": {
     "piir": {
       "word_forms": ["piir", "piiri", "piire", "piirid"],
       "total_occurrences": 2847,
+      "source_poems": {
+        "89248": 5,
+        "89260": 3,
+        "90105": 2,
+        "...": "..."
+      },
       "form_distribution": {
         "piiri": {"count": 787, "forms": ["sg_g", "sg_p"], "confidence_avg": 1.0}
       }
     }
   },
+
+> **v8 Note:** `lemma_index` now includes `source_poems` field (new in v8) tracking which poems each lemma appears in with occurrence counts. The sum of `source_poems` values equals `total_occurrences`.
 
   "ambiguous_words": {
     "kand": {
@@ -229,8 +274,8 @@ The JSON corpus contains complete morphological annotation with 8 main sections:
 **Section descriptions:**
 
 1. **`metadata`** - Corpus-level statistics and build information
-2. **`words`** - Main word form index (452,161 unique forms) with aggregated statistics
-3. **`lemma_index`** - Reverse index from lemmas to word forms (125,600 lemmas, **alphabetically sorted**)
+2. **`words`** - Main word form index (451,371 unique forms) with aggregated statistics and full source_poems tracking
+3. **`lemma_index`** - Reverse index from lemmas to word forms (102,361 lemmas, **alphabetically sorted**) with source_poems tracking (v8)
 4. **`ambiguous_words`** - Words with multiple competing lemma interpretations (14,105 words)
 5. **`method_analytics`** - Performance statistics for each lemmatization method (76 methods)
 6. **`morphological_patterns`** - Distribution of POS + morphological form combinations (81 patterns)
@@ -277,8 +322,8 @@ The SQLite database provides fast indexed lookups with 4 tables:
 import json
 import gzip
 
-# Load the corpus
-with gzip.open('corpus_unknown_reduced.json.gz', 'rt', encoding='utf-8') as f:
+# Load the corpus (use corpus_full_source_poems.json.gz for v8)
+with gzip.open('corpus_full_source_poems.json.gz', 'rt', encoding='utf-8') as f:
     corpus = json.load(f)
 
 # Look up a specific word
@@ -303,6 +348,74 @@ if lemma in corpus['lemma_index']:
 if word in corpus.get('ambiguous_words', {}):
     ambig = corpus['ambiguous_words'][word]
     print(f"\n'{word}' has competing lemmas: {ambig['competing_lemmas']}")
+```
+
+### v8 Statistical Analysis Examples
+
+The v8 corpus enables comprehensive statistical analysis with full source poem tracking:
+
+**Get word distribution across poems:**
+```python
+# Word frequency per poem (v8 feature)
+word = 'ei'
+data = corpus['words'][word]
+source_poems = data['source_poems']  # dict: {poem_id: count}
+
+print(f"Word '{word}' appears in {len(source_poems):,} poems")
+print(f"Total occurrences: {sum(source_poems.values()):,}")
+print(f"Average per poem: {sum(source_poems.values()) / len(source_poems):.1f}")
+
+# Top poems for this word
+top_poems = sorted(source_poems.items(), key=lambda x: -x[1])[:5]
+for poem_id, count in top_poems:
+    print(f"  Poem {poem_id}: {count} occurrences")
+```
+
+**Analyze lemma distribution (v8 feature):**
+```python
+# Lemma now has source_poems (new in v8)
+lemma = 'olema'
+data = corpus['lemma_index'][lemma]
+source_poems = data['source_poems']  # dict: {poem_id: count}
+
+print(f"Lemma '{lemma}' appears in {len(source_poems):,} poems")
+print(f"Word forms: {len(data['word_forms']):,}")
+print(f"Total occurrences: {data['total_occurrences']:,}")
+
+# Geographic/dialectal distribution possible via poem metadata
+```
+
+**Calculate type-token ratio for a poem:**
+```python
+def calculate_ttr(corpus, poem_id):
+    """Calculate type-token ratio for a specific poem (v8 feature)."""
+    types = 0
+    tokens = 0
+
+    for word, data in corpus['words'].items():
+        count = data['source_poems'].get(str(poem_id), 0)
+        if count > 0:
+            types += 1
+            tokens += count
+
+    return types / tokens if tokens > 0 else 0
+
+# Example: TTR for poem 89248
+ttr = calculate_ttr(corpus, 89248)
+print(f"Poem 89248 TTR: {ttr:.3f}")
+```
+
+**Find poems with co-occurring words:**
+```python
+def find_co_occurring_poems(corpus, word1, word2):
+    """Find poems where both words appear (v8 feature)."""
+    poems1 = set(corpus['words'].get(word1, {}).get('source_poems', {}).keys())
+    poems2 = set(corpus['words'].get(word2, {}).get('source_poems', {}).keys())
+    return poems1 & poems2
+
+# Find poems with both "ema" and "isa"
+common_poems = find_co_occurring_poems(corpus, 'ema', 'isa')
+print(f"Poems with both 'ema' and 'isa': {len(common_poems)}")
 ```
 
 ### SQL Example
@@ -550,12 +663,21 @@ The frequency component helps select more likely correct lemmas, as words appear
 - **POS tagging**: Morphological classification for processed words
 - **Morphological forms**: Case/number/tense markers (sg_g, pl_p, etc.)
 - **Method tracking**: Transparent annotation provenance for each word
-- **Source traceability**: Links to original poem identifiers
+- **Source traceability**: Full poem tracking with occurrence counts (v8: unlimited poems per word, with per-poem frequency)
 - **Confidence scoring**: 0-1 scale reflecting method reliability (not accuracy)
 - **Ambiguity marking**: 14,238 words with genuine lemma competition (v4: EstNLTK-validated, was 24,777 in v3, 106,821 in v2)
 - **Frequency data**: Corpus-based frequency information
 
 ## Lemma Validation Status
+
+**V8 Full Source Poems** (102,361 unique lemmas):
+- **Full source poem tracking**: 5,252,911 word-poem pairs (unlimited per word)
+- **Per-poem occurrence counts**: `source_poems` stores `{poem_id: count}` not just presence
+- **Lemma index source_poems**: NEW field tracking poem distribution for each lemma
+- **Example - word "ei"**: 31,988 poems tracked (was limited to 100)
+- **Example - lemma "olema"**: 59,681 poems tracked with counts
+- **Statistical analysis enabled**: Geographic distribution, TTR, frequency analysis
+- **All v7 features preserved**: DeepSeek merges, Neurotõlge VRO, 102,361 lemmas
 
 **V7 DeepSeek Merged** (102,361 unique lemmas):
 - **12.2% lemma reduction** via DeepSeek R1 merge validation (116,572 → 102,361)
