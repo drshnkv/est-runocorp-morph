@@ -110,6 +110,7 @@ This corpus provides automated morphological annotation of Estonian dialectal ru
 - **`corpus_unknown_reduced.json.gz`** (34 MB) - Corpus with Neurotõlge VRO improvements
 - **`corpus_unknown_reduced.db`** (77 MB) - SQLite database for efficient querying
 - **`poems_index.json.gz`** (82 MB) - Complete poem index with preserved word order and annotations
+- **`poems_index_v2/`** (folder) - Enhanced v2 index split into parts (see "poems_index_v2" section below)
 - **`CORPUS_UNKNOWN_REDUCED_README.md`** - Detailed documentation for v6 corpus
 - **`DOCUMENTATION_ET.md`** - Estonian language documentation of annotation process
 - **`examples/`** - Code examples for using the corpus
@@ -559,6 +560,86 @@ If you have the original batch files, you can regenerate the poem index:
 ```bash
 cd examples
 python generate_poem_index.py --batch-dir /path/to/batches --output ../poems_index.json.gz
+```
+
+## poems_index_v2 (Enhanced with Verse Structure)
+
+Version 2 of the poems index adds verse line structure and enhanced metadata.
+
+### Assembly Required
+
+The v2 index (135 MB) is split into 3 parts due to GitHub's 100 MB file size limit:
+
+```bash
+cd poems_index_v2
+./assemble.sh  # or: python assemble.py
+```
+
+After assembly, `poems_index_v2.json.gz` will be created in the parent directory.
+
+### New Features in v2
+
+| Feature | Description |
+|---------|-------------|
+| `verse_lines` | Array of verse strings (split by `/` markers) |
+| `verse_index` | Per-word position indicating which verse the word belongs to |
+| `word_in_verse` | Word position within its verse |
+| `text` | Original text with `/` verse markers preserved |
+| `is_empty` | Flag for 844 empty poems |
+| `metadata` | Enhanced: places, collectors, types, year, collection |
+
+### v2 Statistics
+
+| Metric | Value |
+|--------|-------|
+| Total poems | 108,969 |
+| Total words | 7,344,574 |
+| Total verses | 2,005,147 |
+| Empty poems | 844 |
+| File size | 135 MB |
+
+### v2 Poem Structure
+
+```json
+{
+  "89248": {
+    "text": "piiri pääri pääsuke / kus su kullas pesake / ...",
+    "text_flat": "piiri pääri pääsuke kus su kullas pesake ...",
+    "verse_lines": ["piiri pääri pääsuke", "kus su kullas pesake", ...],
+    "verse_count": 22,
+    "words": [
+      {
+        "original": "piiri",
+        "lemma": "piir",
+        "pos": "S",
+        "form": "sg_g",
+        "verse_index": 0,
+        "word_in_verse": 0,
+        "method": "estnltk+dict",
+        "confidence": 1.0
+      }
+    ],
+    "is_empty": false,
+    "metadata": {
+      "title": "AES, MT 3, 1 (1)",
+      "collection": "erab",
+      "places": ["Viru-Jaagupi", "Viru-Nigula"],
+      "year": "...",
+      "types": ["..."],
+      "collectors": ["..."]
+    }
+  }
+}
+```
+
+### Regenerating v2
+
+```bash
+python generate_poem_index_v2.py \
+  --csv ../estnltk_dict_only/koik_regilaulud_okt_2025.csv \
+  --poems-index poems_index.json.gz \
+  --output poems_index_v2.json.gz \
+  --force-save
 ```
 
 ## Lemma Overview CSV
