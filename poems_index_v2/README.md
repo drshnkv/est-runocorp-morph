@@ -97,22 +97,6 @@ Version 2 of the poems index adds verse line structure and enhanced metadata to 
 }
 ```
 
-## Regenerating v2
-
-If you need to regenerate the v2 index from source data:
-
-```bash
-python generate_poem_index_v2.py \
-  --csv ../estnltk_dict_only/koik_regilaulud_okt_2025.csv \
-  --poems-index poems_index.json.gz \
-  --output poems_index_v2.json.gz \
-  --force-save
-```
-
-Requires:
-- Source CSV with `/` verse markers
-- Original `poems_index.json.gz` with annotations
-
 ---
 
 **Created:** 2025-12-14

@@ -632,16 +632,6 @@ After assembly, `poems_index_v2.json.gz` will be created in the parent directory
 }
 ```
 
-### Regenerating v2
-
-```bash
-python generate_poem_index_v2.py \
-  --csv ../estnltk_dict_only/koik_regilaulud_okt_2025.csv \
-  --poems-index poems_index.json.gz \
-  --output poems_index_v2.json.gz \
-  --force-save
-```
-
 ## Lemma Overview CSV
 
 A comprehensive CSV overview of all lemmas is provided for human quality review and linguistic analysis. The CSV contains 21 columns with detailed information about each lemma.
