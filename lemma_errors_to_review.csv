@@ -1,0 +1,9 @@
+current_lemma,word_form,actual_lemma,current_pos,suggested_pos,frequency,notes
+vesi,vii,viima,V,V,4109,"'vii' is imperative of 'viima' (take/carry), not 'vesi' (water)"
+soo,suu,suu,S,S,4955,"'suu' is genitive/partitive of 'suu' (mouth), not 'soo' (marsh)"
+neid,neidu,neiu,S,S,5164,"'neidu' is partitive of 'neiu' (maiden), not pronoun 'neid' (them)"
+pea,pea,pidama,V,V,3201,"Some 'pea' are imperative of 'pidama' (keep/hold), not 'pea' (head)"
+tee,tee,tegema,V,V,2381,"Some 'tee' are imperative of 'tegema' (make/do), not 'tee' (road/tea)"
+viis,viis,viima,V,V,1650,"Some 'viis' are past tense of 'viima' (took/carried), not 'viis' (five/melody)"
+saan,saani,saan,S,S,2306,"'saani' could be genitive of 'saan' (sled), but some are verb 'saama' (get)"
+too,tuu,tooma,S,V,5299,"Some 'tuu' are dialectal present of 'tooma' (bring), not pronoun 'too' (that)"

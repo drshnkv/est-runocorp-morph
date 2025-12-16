@@ -15,7 +15,27 @@ This corpus provides automated morphological annotation of Estonian dialectal ru
 
 ## Corpus Statistics
 
-### Current Version (v8 - corpus_full_source_poems) ✨ NEW
+### Current Version (v9 - POS Corrections) ✨ NEW
+
+- **POS corrections applied**: 382,574 tokens (14.1% of manual_override)
+- **Substitution rules**: 102 verified POS corrections
+- **Poems affected**: 71,788 (65.9% of corpus)
+- **Quality improvement**: Function words now correctly tagged
+
+**What's new in v9:**
+- **382,574 POS corrections**: Closed-class words now properly tagged
+- **ikka S→D** (39,197): "always" now correctly an adverb
+- **mina S→P** (30,896): "I" now correctly a pronoun
+- **peale S→K** (26,560): "onto" now correctly an adposition
+- **olema Y→V** (16,401): Dialectal verb forms now tagged as verbs
+- **kas D→J** (15,967): "whether" now correctly a conjunction
+- **And 97 more corrections...**
+
+**Files:**
+- `poems_index_v3/` (folder) - Enhanced poem index with POS corrections (split into parts)
+- `corpus_full_source_poems_v2.json.gz` (59 MB) - Aggregated corpus with corrected POS counts
+
+### Previous Version (v8 - corpus_full_source_poems)
 
 - **Total word instances processed**: 7,344,568
 - **Unique word forms**: 451,371
@@ -83,11 +103,38 @@ This corpus provides automated morphological annotation of Estonian dialectal ru
 
 ## Files Included
 
-### Current Version (v8 - December 2025) ✨ NEW
+### Current Version (v9 - December 2025) ✨ NEW
+
+- **`poems_index_v3/`** (folder, 135 MB total) - POS-corrected poem index (split into 3 parts)
+- **`corpus_full_source_poems_v2.json.gz`** (59 MB) - Corpus with corrected POS distributions
+
+**What's new in v9:**
+- **POS tag corrections**: 102 systematic corrections applied to 382,574 tokens
+- **Function word classification**: Pronouns, adverbs, adpositions, conjunctions now correct
+- **Distribution shift**: S (nouns) -325,286 → P/D/K/V/J gains
+- **Documentation**: See `POS_SUBSTITUTION_ANALYSIS_REPORT.md` for full analysis
+
+**Top corrections by token count:**
+
+| Substitution | Tokens | Explanation |
+|--------------|--------|-------------|
+| ikka S→D | 39,197 | "always" is adverb |
+| mina S→P | 30,896 | "I" is pronoun |
+| peale S→K | 26,560 | "onto" is adposition |
+| olema Y→V | 16,401 | dialectal verb |
+| kas D→J | 15,967 | "whether" is conjunction |
+
+**Assembly (poems_index_v3):**
+```bash
+cd poems_index_v3
+./assemble.sh  # Creates ../poems_index_v3.json.gz
+```
+
+### Previous Version (v8 - December 2025)
 
 - **`corpus_full_source_poems.json.gz`** (62 MB) - Corpus with full source poem tracking
 
-**What's new in v8:**
+**What was new in v8:**
 - **Unlimited source_poems**: No more 100-poem limit per word (v7 had this limit)
 - **Per-poem counts**: `source_poems` now stores `{poem_id: occurrence_count}` instead of list
 - **Lemma source_poems**: `lemma_index` now includes `source_poems` field with per-poem counts

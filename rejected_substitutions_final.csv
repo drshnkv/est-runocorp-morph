@@ -1,0 +1,5 @@
+lemma,current_pos,proposed_pos,frequency,reason
+noh,I,D,4057,"Discourse marker 'no/noh' is interjection (well/so), not adverb"
+kätte,K,S,3210,"'kätte' = into possession/hands, is adposition, not noun"
+otsas,K,S,2538,"'otsas' = at the end of, is adposition, not noun"
+ees,K,D,2494,"'ees' = in front of, is adposition (requires object), not pure adverb"

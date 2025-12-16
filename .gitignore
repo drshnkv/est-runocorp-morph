@@ -61,3 +61,13 @@ user_analysis/
 custom_exports/
 baseline_corpus.json
 corpus_unknown_reduced.json
+
+# Large raw JSON files (use compressed versions instead)
+poems_index_v2.json
+poems_index_v3.json
+corpus_full_source_poems.json
+corpus_full_source_poems_v2.json
+poems_index_v3.json.gz
+
+# Intermediate analysis files
+all_substitution_examples*
