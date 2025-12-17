@@ -71,3 +71,6 @@ poems_index_v3.json.gz
 
 # Intermediate analysis files
 all_substitution_examples*
+
+# Experimental analysis output
+analysis_output/noor_substitutsioonitest/
